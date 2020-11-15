@@ -1,9 +1,10 @@
 package com.manugmoya.bicimadstations.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-data class Token (
+data class Token(
     val code: String?,
     val description: String?,
     val datetime: String?,
@@ -11,7 +12,7 @@ data class Token (
 )
 
 
-data class Data (
+data class Data(
     val nameApp: String?,
     val levelApp: Long?,
     val updatedAt: String?,
@@ -29,7 +30,7 @@ data class Data (
 )
 
 
-data class APICounter (
+data class APICounter(
     val current: Long?,
     val dailyUse: Long?,
     val owner: Long?,
@@ -38,40 +39,41 @@ data class APICounter (
 )
 
 
-data class LastUpdate (
+data class LastUpdate(
     val date: Long?
 )
 
 //////////////////////////////
-
-data class Stations (
+@Parcelize
+data class Stations(
     val code: String,
     val description: String,
     val datetime: String,
     val data: List<Station>
-)
+) : Parcelable
 
 @Parcelize
-data class Station (
+data class Station(
+    var distanceTo: Float,
     val id: Long,
     val name: String,
-    val light: Long,
+    val light: Int,
     val number: String,
     val address: String,
     val activate: Long,
-    val noAvailable: Long,
-    val totalBases: Long,
-    val dockBikes: Long,
-    val freeBases: Long,
-    val reservationsCount: Long,
+    @SerializedName("no_available") val noAvailable: Int,
+    @SerializedName("total_bases") val totalBases: Int,
+    @SerializedName("dock_bikes") val dockBikes: Int,
+    @SerializedName("free_bases") val freeBases: Int,
+    @SerializedName("reservations_count") val reservationsCount: Int,
     val geometry: Geometry
-): Parcelable
+) : Parcelable
 
 @Parcelize
-data class Geometry (
+data class Geometry(
     val type: Type,
     val coordinates: List<Double>
-): Parcelable
+) : Parcelable
 
 
 enum class Type {
