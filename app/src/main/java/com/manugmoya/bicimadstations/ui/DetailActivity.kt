@@ -1,8 +1,7 @@
 package com.manugmoya.bicimadstations.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.text.backgroundColor
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.manugmoya.bicimadstations.R
@@ -55,9 +54,12 @@ class DetailActivity : AppCompatActivity() {
 
             when(light){
                 0 -> {binding.stationDetailInfo.setBackgroundResource(R.color.green_700)}
-                1 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)}
-                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.orange_700)}
+                1 -> {binding.stationDetailInfo.setBackgroundResource(R.color.orange_700)}
+                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)} 
                 3 -> {binding.stationDetailInfo.setBackgroundResource(R.color.red_700)}
+            }
+            if(freeBases == 0){
+                binding.root.setBackgroundResource(R.color.red_700)
             }
         }
     }

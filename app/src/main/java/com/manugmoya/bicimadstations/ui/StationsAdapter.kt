@@ -56,9 +56,12 @@ class StationsAdapter (
             tvStationAddressValue.text = station.address
             when(station.light){
                 0 -> {binding.root.setBackgroundResource(R.color.green_700)}
-                1 -> {binding.root.setBackgroundResource(R.color.yellow_700)}
-                2 -> {binding.root.setBackgroundResource(R.color.orange_700)}
+                1 -> {binding.root.setBackgroundResource(R.color.orange_700)}
+                2 -> {binding.root.setBackgroundResource(R.color.yellow_700)}
                 3 -> {binding.root.setBackgroundResource(R.color.red_700)}
+            }
+            if(station.freeBases == 0){
+                binding.root.setBackgroundResource(R.color.red_700)
             }
         }
     }

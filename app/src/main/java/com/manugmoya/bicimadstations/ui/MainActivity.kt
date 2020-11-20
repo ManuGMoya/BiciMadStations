@@ -23,7 +23,7 @@ import kotlin.coroutines.resume
 class MainActivity : CoroutineScopeActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var location: Location
+
 
     private val adapter = StationsAdapter { station ->
         val intent = Intent(this@MainActivity, DetailActivity::class.java)
@@ -41,42 +41,46 @@ class MainActivity : CoroutineScopeActivity() {
 
         binding.rvStations.adapter = adapter
 
-        launch(Dispatchers.IO) {
-            val locationDeferred = async { getLocation() }
-            location = locationDeferred.await()
-
+        launch {
+            val location = async { getLocation() }
             val tokenResponse = async { StationsDb.service.getToken(EMAIL, PASSWORD) }
 
             tokenResponse.await().data?.get(0)?.accessToken?.let { token ->
-                val stations = StationsDb.service.getStation(token)
-                withContext(Dispatchers.Main) {
-                    adapter.stationsList = orderListByLocation(stations.data)
-                }
+                val stations = withContext(Dispatchers.IO) { StationsDb.service.getStation(token) }
+                adapter.stationsList =
+                    orderListByLocation(
+                        location.await(),
+                        stations.data
+                    )
             }
         }
     }
 
-    fun orderListByLocation(data: List<Station>): List<Station> {
-        data.forEach {
-            val stationLocation = Location("").apply {
-                longitude = it.geometry.coordinates[0]
-                latitude = it.geometry.coordinates[1]
+    private suspend fun orderListByLocation(location: Location, data: List<Station>): List<Station> {
+        return withContext(Dispatchers.Default){
+            data.forEach {
+                val stationLocation = Location("").apply {
+                    longitude = it.geometry.coordinates[0]
+                    latitude = it.geometry.coordinates[1]
+                }
+                it.distanceTo = location.distanceTo(stationLocation)
             }
-            it.distanceTo = location.distanceTo(stationLocation)
+            data.sortedBy { it.distanceTo }
         }
-        return data.sortedBy { it.distanceTo }
     }
 
     private suspend fun getLocation(): Location {
-        val targetLocation = Location("")
-        targetLocation.latitude = 0.0
-        targetLocation.longitude = 0.0
+        return withContext(Dispatchers.IO){
+            val targetLocation = Location("")
+            targetLocation.latitude = 0.0
+            targetLocation.longitude = 0.0
 
-        val success = requestCoarseLocationPermission()
-        return if (success) {
-            findLastLocation() ?: targetLocation
-        } else {
-            targetLocation
+            val success = requestCoarseLocationPermission()
+             if (success) {
+                findLastLocation() ?: targetLocation
+            } else {
+                targetLocation
+            }
         }
     }
 
