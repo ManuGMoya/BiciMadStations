@@ -50,13 +50,18 @@ class DetailActivity : AppCompatActivity() {
             }
 
             when(light){
-                0 -> {binding.stationDetailInfo.setBackgroundResource(R.color.green_700)}
-                1 -> {binding.stationDetailInfo.setBackgroundResource(R.color.orange_700)}
-                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)}
-                3 -> {binding.stationDetailInfo.setBackgroundResource(R.color.red_700)}
+                0 -> {binding.stationDetailInfo.setBackgroundResource(R.color.green_700)
+                    binding.root.setBackgroundResource(R.color.green_700)}
+                1 -> {binding.stationDetailInfo.setBackgroundResource(R.color.orange_700)
+                    binding.root.setBackgroundResource(R.color.orange_700)}
+                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)
+                    binding.root.setBackgroundResource(R.color.yellow_700)}
+                3 -> {binding.stationDetailInfo.setBackgroundResource(R.color.red_700)
+                    binding.root.setBackgroundResource(R.color.red_700)}
             }
             if(freeBases == 0){
                 binding.stationDetailInfo.setBackgroundResource(R.color.red_700)
+                binding.root.setBackgroundResource(R.color.red_700)
             }
 
             binding.fab.setOnClickListener {
@@ -64,7 +69,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
-    
+
 }
 
 

@@ -64,7 +64,7 @@ class StationsAdapter(
                 2 -> {binding.root.setBackgroundResource(R.color.yellow_700)}
                 3 -> {binding.root.setBackgroundResource(R.color.red_700)}
             }
-            if(station.freeBases == 0){
+            if(station.freeBases == 0 || station.noAvailable == 1){
                 binding.root.setBackgroundResource(R.color.red_700)
             }
         }
