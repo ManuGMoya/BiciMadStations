@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.manugmoya.bicimadstations.R
+import com.manugmoya.bicimadstations.appendInfo
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
 import com.manugmoya.bicimadstations.model.Station
 
@@ -29,22 +30,22 @@ class DetailActivity : AppCompatActivity() {
 
             binding.stationDetailInfo.text = buildSpannedString {
 
-                appendInfo(R.string.address, address)
+                appendInfo(this@DetailActivity,R.string.address, address)
 
                 val available = if (noAvailable == 0){
                     getString(R.string.station_enabled)
                 }else{
                     getString(R.string.station_disabled)
                 }
-                appendInfo(R.string.available_station, available)
+                appendInfo(this@DetailActivity, R.string.available_station, available)
 
-                appendInfo(R.string.total_bases, totalBases.toString())
+                appendInfo(this@DetailActivity, R.string.total_bases, totalBases.toString())
 
-                appendInfo(R.string.free_bases, freeBases.toString())
+                appendInfo(this@DetailActivity, R.string.free_bases, freeBases.toString())
 
-                appendInfo(R.string.bikes_in_bases, dockBikes.toString())
+                appendInfo(this@DetailActivity,R.string.bikes_in_bases, dockBikes.toString())
 
-                appendInfo(R.string.reservations_number, reservationsCount.toString())
+                appendInfo(this@DetailActivity, R.string.reservations_number, reservationsCount.toString())
 
             }
 
@@ -63,14 +64,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun SpannableStringBuilder.appendInfo(stringRes: Int, value: String) {
-        bold {
-            append(getString(stringRes))
-            append(": ")
-        }
-        appendLine(value)
-    }
+    
 }
 
 
