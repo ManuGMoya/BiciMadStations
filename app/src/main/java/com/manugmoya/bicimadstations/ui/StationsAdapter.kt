@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ItemStationBinding
+import com.manugmoya.bicimadstations.inflate
 import com.manugmoya.bicimadstations.model.Station
 import kotlin.properties.Delegates
 
@@ -34,11 +35,8 @@ class StationsAdapter(
     override fun getItemCount(): Int = stationsList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_station, parent, false
-            )
-        )
+        val view = parent.inflate(R.layout.item_station,false)
+        return ItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

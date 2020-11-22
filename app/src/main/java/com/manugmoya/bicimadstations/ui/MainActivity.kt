@@ -17,6 +17,7 @@ import com.manugmoya.bicimadstations.model.EMAIL
 import com.manugmoya.bicimadstations.model.PASSWORD
 import com.manugmoya.bicimadstations.model.Station
 import com.manugmoya.bicimadstations.model.StationsDb
+import com.manugmoya.bicimadstations.startActivity
 import kotlinx.coroutines.*
 import kotlin.coroutines.resume
 
@@ -26,10 +27,16 @@ class MainActivity : CoroutineScopeActivity() {
 
 
     private val adapter = StationsAdapter (this){ station ->
-        val intent = Intent(this@MainActivity, DetailActivity::class.java)
+       /* val intent = Intent(this@MainActivity, DetailActivity::class.java)
         intent.putExtra(DetailActivity.STATION, station)
+        startActivity(intent)*/
 
-        startActivity(intent)
+        // Usando función reifield
+        startActivity<DetailActivity>{
+            putExtra(DetailActivity.STATION, station)
+        }
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
