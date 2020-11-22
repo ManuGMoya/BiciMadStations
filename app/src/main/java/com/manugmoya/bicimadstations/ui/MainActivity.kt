@@ -25,7 +25,7 @@ class MainActivity : CoroutineScopeActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
-    private val adapter = StationsAdapter { station ->
+    private val adapter = StationsAdapter (this){ station ->
         val intent = Intent(this@MainActivity, DetailActivity::class.java)
         intent.putExtra(DetailActivity.STATION, station)
 
@@ -72,8 +72,8 @@ class MainActivity : CoroutineScopeActivity() {
     private suspend fun getLocation(): Location {
         return withContext(Dispatchers.IO){
             val targetLocation = Location("")
-            targetLocation.latitude = 0.0
-            targetLocation.longitude = 0.0
+            targetLocation.latitude = 40.41831
+            targetLocation.longitude = -3.70275
 
             val success = requestCoarseLocationPermission()
              if (success) {
