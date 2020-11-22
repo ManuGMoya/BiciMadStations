@@ -2,6 +2,7 @@ package com.manugmoya.bicimadstations.ui
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
@@ -55,6 +56,10 @@ class DetailActivity : AppCompatActivity() {
             }
             if(freeBases == 0){
                 binding.stationDetailInfo.setBackgroundResource(R.color.red_700)
+            }
+
+            binding.fab.setOnClickListener {
+                Toast.makeText(this@DetailActivity, name, Toast.LENGTH_LONG).show()
             }
         }
     }
