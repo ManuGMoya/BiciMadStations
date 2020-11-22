@@ -1,5 +1,6 @@
 package com.manugmoya.bicimadstations.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,10 @@ import com.manugmoya.bicimadstations.databinding.ItemStationBinding
 import com.manugmoya.bicimadstations.model.Station
 import kotlin.properties.Delegates
 
-class StationsAdapter (
-        private val listener: (Station) -> Unit
-) : RecyclerView.Adapter<StationsAdapter.ItemViewHolder>(){
+class StationsAdapter(
+    private val context: Context,
+    private val listener: (Station) -> Unit
+) : RecyclerView.Adapter<StationsAdapter.ItemViewHolder>() {
 
     var stationsList: List<Station> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
@@ -52,6 +54,8 @@ class StationsAdapter (
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemStationBinding.bind(view)
         fun bind(station: Station) = with(binding){
+            tvStationTitle.text = "${context.getString(R.string.station_name)}: "
+            tvStationAddressTitle.text = "${context.getString(R.string.station_address)}: "
             tvStationName.text = station.name
             tvStationAddressValue.text = station.address
             when(station.light){

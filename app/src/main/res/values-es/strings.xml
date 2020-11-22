@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Estaciones BiciMad</string>
+    <string name="address">Dirección</string>
+    <string name="available_station">Disponibilidad de la Estación</string>
+    <string name="station_enabled">Estación Habilitada</string>
+    <string name="station_disabled">Estación Deshabilitada</string>
+    <string name="total_bases">Bases Totales</string>
+    <string name="free_bases">Bases Libres</string>
+    <string name="bikes_in_bases">Bicicletas en Bases</string>
+    <string name="reservations_number">Número de reservas</string>
+    <string name="station_address">Dirección de la Estación</string>
+    <string name="station_name">Nombre de la Estación</string>
+</resources>

@@ -1,6 +1,7 @@
 package com.manugmoya.bicimadstations.ui
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
@@ -27,41 +28,43 @@ class DetailActivity : AppCompatActivity() {
 
             binding.stationDetailInfo.text = buildSpannedString {
 
-                bold { append("Address: ") }
-                appendLine(address)
+                appendInfo(R.string.address, address)
 
-                bold { append("Available station: ") }
                 val available = if (noAvailable == 0){
-                    "Station Enabled"
+                    getString(R.string.station_enabled)
                 }else{
-                    "Station Disabled"
+                    getString(R.string.station_disabled)
                 }
-                appendLine(available)
+                appendInfo(R.string.available_station, available)
 
-                bold { append("Total bases: ") }
-                appendLine(totalBases.toString())
+                appendInfo(R.string.total_bases, totalBases.toString())
 
-                bold { append("Free bases: ") }
-                appendLine(freeBases.toString())
+                appendInfo(R.string.free_bases, freeBases.toString())
 
-                bold { append("Bikes in bases: ") }
-                appendLine(dockBikes.toString())
+                appendInfo(R.string.bikes_in_bases, dockBikes.toString())
 
-                bold { append("Number of reservations: ") }
-                appendLine(reservationsCount.toString())
+                appendInfo(R.string.reservations_number, reservationsCount.toString())
 
             }
 
             when(light){
                 0 -> {binding.stationDetailInfo.setBackgroundResource(R.color.green_700)}
                 1 -> {binding.stationDetailInfo.setBackgroundResource(R.color.orange_700)}
-                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)} 
+                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)}
                 3 -> {binding.stationDetailInfo.setBackgroundResource(R.color.red_700)}
             }
             if(freeBases == 0){
-                binding.root.setBackgroundResource(R.color.red_700)
+                binding.stationDetailInfo.setBackgroundResource(R.color.red_700)
             }
         }
+    }
+
+    private fun SpannableStringBuilder.appendInfo(stringRes: Int, value: String) {
+        bold {
+            append(getString(stringRes))
+            append(": ")
+        }
+        appendLine(value)
     }
 }
 
