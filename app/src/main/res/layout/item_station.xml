@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/station_name"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
 
@@ -22,10 +22,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tv_station_title"
-        app:layout_constraintTop_toTopOf="@id/tv_station_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_station_title"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Puerta del Sol A"
+        tools:text="Puerta del Sol A akperhlkashlkdalhkhakslhkasasdhwdfhhlaljkhlaskfhkasfhaflfhlak lkashjahddhajjdkajhdaksj"
         android:textSize="18sp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>
@@ -34,20 +34,22 @@
         android:id="@+id/tv_station_address_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_station_title"
+        android:layout_marginStart="16dp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/station_address"
-        android:textSize="14sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_station_name"
+        android:layout_marginTop="8dp"
+        tools:text="@string/station_address" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_station_address_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/tv_station_address_title"
-        app:layout_constraintTop_toTopOf="@id/tv_station_address_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_station_address_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_station_name"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Puerta del Sol nº 1"
         android:textSize="18sp"
@@ -61,7 +63,6 @@
         android:background="#ededed"
         android:layout_marginBottom="1dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_station_address_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
