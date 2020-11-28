@@ -8,6 +8,6 @@
     <string name="free_bases">Free Bases</string>
     <string name="bikes_in_bases">Bikes in Bases</string>
     <string name="reservations_number">Number of Reservations</string>
-    <string name="station_address">Station address</string>
-    <string name="station_name">Station name</string>
+    <string name="station_address">Address</string>
+    <string name="station_name">Name</string>
 </resources>

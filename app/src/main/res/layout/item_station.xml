@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Puerta del Sol A akperhlkashlkdalhkhakslhkasasdhwdfhhlaljkhlaskfhkasfhaflfhlak lkashjahddhajjdkajhdaksj"
+        tools:text="Puerta del Sol A"
         android:textSize="18sp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>

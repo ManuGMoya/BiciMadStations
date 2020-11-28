@@ -11,8 +11,6 @@ object StationsDb {
         level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder().addInterceptor(this).build()
     }
-
-
     val service: StationsDbService = Retrofit.Builder()
             .baseUrl("https://openapi.emtmadrid.es/v1/")
             .client(okHttpClient)

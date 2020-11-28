@@ -9,6 +9,6 @@
     <string name="free_bases">Bases Libres</string>
     <string name="bikes_in_bases">Bicicletas en Bases</string>
     <string name="reservations_number">Número de reservas</string>
-    <string name="station_address">Dirección de la Estación</string>
-    <string name="station_name">Nombre de la Estación</string>
+    <string name="station_address">Dirección</string>
+    <string name="station_name">Nombre</string>
 </resources>

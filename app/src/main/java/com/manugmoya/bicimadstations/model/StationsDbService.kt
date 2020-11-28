@@ -9,10 +9,10 @@ interface StationsDbService {
     suspend fun getToken(
         @Header("email") email: String,
         @Header("password") pwd: String,
-    ) : Token
+    ): Token
 
     @GET("transport/bicimad/stations/")
     suspend fun getStation(
         @Header("accessToken") token: String
-    ) : Stations
+    ): Stations
 }
