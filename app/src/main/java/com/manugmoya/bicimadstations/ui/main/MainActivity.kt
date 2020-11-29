@@ -13,10 +13,13 @@ import com.manugmoya.bicimadstations.ui.common.startActivity
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class MainActivity : CoroutineScopeActivity() {
+class MainActivity : CoroutineScopeActivity(), MainPresenter.View {
 
     private val locationRepository: LocationRepository by lazy { LocationRepository(this) }
     private val stationRepository: StationsRepository by lazy { StationsRepository() }
+
+    // Instancia del presenter para poder comunicar esta vista con él
+    private val presenter = MainPresenter()
 
     private val adapter = StationsAdapter(this) { station ->
         // Usando función reifield
@@ -29,6 +32,9 @@ class MainActivity : CoroutineScopeActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // al presenter le pasamos la vista para qwue el presenter pueda comunicarse con ella.
+        presenter.onCreate(this)
 
         binding.rvStations.adapter = adapter
 
@@ -51,6 +57,11 @@ class MainActivity : CoroutineScopeActivity() {
             }
             binding.progress.visibility = View.GONE
         }
+    }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
     }
 
 }
