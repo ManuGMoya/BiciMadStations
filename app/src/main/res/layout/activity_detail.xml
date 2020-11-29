@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.DetailActivity">
+    tools:context=".ui.detail.DetailActivity">
 
-    <com.manugmoya.bicimadstations.ui.StationDetailInfoView
+    <com.manugmoya.bicimadstations.ui.detail.StationDetailInfoView
         android:id="@+id/stationDetailInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations.common
+package com.manugmoya.bicimadstations.ui.common
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

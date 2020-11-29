@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations
+package com.manugmoya.bicimadstations.ui.common
 
 import android.app.Activity
 import android.content.Context

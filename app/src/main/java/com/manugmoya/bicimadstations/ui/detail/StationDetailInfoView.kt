@@ -1,11 +1,11 @@
-package com.manugmoya.bicimadstations.ui
+package com.manugmoya.bicimadstations.ui.detail
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.buildSpannedString
 import com.manugmoya.bicimadstations.R
-import com.manugmoya.bicimadstations.appendInfo
+import com.manugmoya.bicimadstations.ui.common.appendInfo
 import com.manugmoya.bicimadstations.model.Station
 
 

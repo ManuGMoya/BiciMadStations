@@ -1,13 +1,14 @@
-package com.manugmoya.bicimadstations.ui
+package com.manugmoya.bicimadstations.ui.main
 
 import android.os.Bundle
 import android.widget.Toast
-import com.manugmoya.bicimadstations.common.CoroutineScopeActivity
+import com.manugmoya.bicimadstations.ui.common.CoroutineScopeActivity
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
 import com.manugmoya.bicimadstations.model.LocationRepository
 import com.manugmoya.bicimadstations.model.StationsRepository
-import com.manugmoya.bicimadstations.orderListByLocation
-import com.manugmoya.bicimadstations.startActivity
+import com.manugmoya.bicimadstations.ui.detail.DetailActivity
+import com.manugmoya.bicimadstations.ui.common.orderListByLocation
+import com.manugmoya.bicimadstations.ui.common.startActivity
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 

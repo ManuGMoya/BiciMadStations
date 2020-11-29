@@ -1,14 +1,13 @@
-package com.manugmoya.bicimadstations.ui
+package com.manugmoya.bicimadstations.ui.main
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ItemStationBinding
-import com.manugmoya.bicimadstations.inflate
+import com.manugmoya.bicimadstations.ui.common.inflate
 import com.manugmoya.bicimadstations.model.Station
 import kotlin.properties.Delegates
 
