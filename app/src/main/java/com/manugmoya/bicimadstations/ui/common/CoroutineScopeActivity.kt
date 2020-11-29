@@ -8,19 +8,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 
-abstract class CoroutineScopeActivity : AppCompatActivity(), CoroutineScope {
 
-    private lateinit var job: Job
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+abstract class CoroutineScopeActivity : AppCompatActivity(), Scope by Scope.Impl() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        job = SupervisorJob()
+        initScope()
     }
 
     override fun onDestroy() {
+        cancelScope()
         super.onDestroy()
-        job.cancel() // Cancel job on activity destroy. After destroy all children jobs will be cancelled automatically
     }
 }
