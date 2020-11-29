@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:context=".ui.DetailActivity">
 
-    <TextView
+    <com.manugmoya.bicimadstations.ui.StationDetailInfoView
         android:id="@+id/stationDetailInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

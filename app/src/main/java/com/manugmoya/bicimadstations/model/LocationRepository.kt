@@ -1,14 +1,10 @@
 package com.manugmoya.bicimadstations.model
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.location.Location
-import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
 
 class LocationRepository(activity: Activity) {
     companion object {
@@ -16,7 +12,8 @@ class LocationRepository(activity: Activity) {
         const val LONGITUDE_MADRID_CENTER = -3.70275
     }
 
-    private var fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
+    private val locationDataSource = PlayServicesLocationDataSource(activity)
+
     private val permissionChecker =
         PermissionChecker(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
 
@@ -28,19 +25,11 @@ class LocationRepository(activity: Activity) {
 
             val success = permissionChecker.request()
             if (success) {
-                findLastLocation() ?: targetLocation
+                locationDataSource.findLastLocation() ?: targetLocation
             } else {
                 targetLocation
             }
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private suspend fun findLastLocation(): Location? =
-        suspendCancellableCoroutine { continuation ->
-            fusedLocationClient.lastLocation
-                .addOnCompleteListener {
-                    continuation.resume(it.result)
-                }
-        }
 }

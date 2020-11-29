@@ -1,10 +1,8 @@
 package com.manugmoya.bicimadstations.ui
 
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.appendInfo
@@ -28,26 +26,7 @@ class DetailActivity : AppCompatActivity() {
 
             supportActionBar?.title = name
 
-            binding.stationDetailInfo.text = buildSpannedString {
-
-                appendInfo(this@DetailActivity,R.string.address, address)
-
-                val available = if (noAvailable == 0){
-                    getString(R.string.station_enabled)
-                }else{
-                    getString(R.string.station_disabled)
-                }
-                appendInfo(this@DetailActivity, R.string.available_station, available)
-
-                appendInfo(this@DetailActivity, R.string.total_bases, totalBases.toString())
-
-                appendInfo(this@DetailActivity, R.string.free_bases, freeBases.toString())
-
-                appendInfo(this@DetailActivity,R.string.bikes_in_bases, dockBikes.toString())
-
-                appendInfo(this@DetailActivity, R.string.reservations_number, reservationsCount.toString())
-
-            }
+            binding.stationDetailInfo.setStation(this)
 
             when(light){
                 0 -> {binding.stationDetailInfo.setBackgroundResource(R.color.green_700)

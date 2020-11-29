@@ -34,12 +34,12 @@ class MainActivity : CoroutineScopeActivity() {
             val location = async { locationRepository.getLocation() }
             val stationList = async { stationRepository.getDataStations() }
 
-            stationList.await()?.let { stationList ->
+            stationList.await()?.let { stationsList ->
                 adapter.stationsList =
-                    stationList.orderListByLocation(
+                    stationsList.orderListByLocation(
                         location.await()
                     )
-            }.run {
+            } ?: run {
                 Toast.makeText(
                     this@MainActivity,
                     "Ha habido un error al recuperar los datos",
