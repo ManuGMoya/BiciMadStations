@@ -1,6 +1,7 @@
 package com.manugmoya.bicimadstations.ui.main
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.manugmoya.bicimadstations.ui.common.CoroutineScopeActivity
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
@@ -32,6 +33,7 @@ class MainActivity : CoroutineScopeActivity() {
         binding.rvStations.adapter = adapter
 
         launch {
+            binding.progress.visibility = View.VISIBLE
             val location = async { locationRepository.getLocation() }
             val stationList = async { stationRepository.getDataStations() }
 
@@ -47,6 +49,7 @@ class MainActivity : CoroutineScopeActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            binding.progress.visibility = View.GONE
         }
     }
 
