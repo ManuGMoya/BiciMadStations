@@ -3,59 +3,59 @@ package com.manugmoya.bicimadstations.ui.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.manugmoya.bicimadstations.ui.common.CoroutineScopeActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
 import com.manugmoya.bicimadstations.model.LocationRepository
+import com.manugmoya.bicimadstations.model.Station
 import com.manugmoya.bicimadstations.model.StationsRepository
-import com.manugmoya.bicimadstations.ui.detail.DetailActivity
-import com.manugmoya.bicimadstations.ui.common.orderListByLocation
 import com.manugmoya.bicimadstations.ui.common.startActivity
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.manugmoya.bicimadstations.ui.detail.DetailActivity
 
-class MainActivity : CoroutineScopeActivity(), MainPresenter.View {
+class MainActivity : AppCompatActivity(), MainPresenter.View {
 
-    private val locationRepository: LocationRepository by lazy { LocationRepository(this) }
-    private val stationRepository: StationsRepository by lazy { StationsRepository() }
+    private lateinit var binding: ActivityMainBinding
 
-    // Instancia del presenter para poder comunicar esta vista con él
-    private val presenter = MainPresenter()
+    private val presenter by lazy {  MainPresenter( LocationRepository(this), StationsRepository()) }
 
     private val adapter = StationsAdapter(this) { station ->
-        // Usando función reifield
-        startActivity<DetailActivity> {
-            putExtra(DetailActivity.STATION, station)
-        }
+        presenter.onStationClicked(station)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // al presenter le pasamos la vista para qwue el presenter pueda comunicarse con ella.
         presenter.onCreate(this)
 
         binding.rvStations.adapter = adapter
+    }
 
-        launch {
-            binding.progress.visibility = View.VISIBLE
-            val location = async { locationRepository.getLocation() }
-            val stationList = async { stationRepository.getDataStations() }
+    override fun showProgress() {
+        binding.progress.visibility = View.VISIBLE
+    }
 
-            stationList.await()?.let { stationsList ->
-                adapter.stationsList =
-                    stationsList.orderListByLocation(
-                        location.await()
-                    )
-            } ?: run {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Ha habido un error al recuperar los datos",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            binding.progress.visibility = View.GONE
+    override fun hideProgress() {
+        binding.progress.visibility = View.GONE
+    }
+
+
+    override fun updateData(stations: List<Station>?) {
+        stations?.let { stationsList ->
+            adapter.stationsList =
+                stationsList
+        } ?: run {
+            Toast.makeText(
+                this@MainActivity,
+                "Ha habido un error al recuperar los datos",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    override fun navigateToDetail(station: Station) {
+        startActivity<DetailActivity> {
+            putExtra(DetailActivity.STATION, station)
         }
     }
 

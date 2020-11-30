@@ -21,8 +21,6 @@ interface Scope: CoroutineScope {
         job.cancel()
     }
 
-    // Creamos una clase dentro de la propia interface para almacenar el objeto job con su estado
-    // Y luego mediante la delegación de Interfaces para no repetir este código
     class Impl : Scope {
         override lateinit var job: Job
     }
