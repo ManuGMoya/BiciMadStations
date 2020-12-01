@@ -3,55 +3,58 @@ package com.manugmoya.bicimadstations.ui.detail
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
 import com.manugmoya.bicimadstations.model.Station
 
-class DetailActivity : AppCompatActivity() , DetailPresenter.View{
+class DetailActivity : AppCompatActivity(){
 
     companion object {
         const val STATION = "DetailActivity:station"
     }
 
     private lateinit var binding : ActivityDetailBinding
-    private val presenter = DetailPresenter()
+    private lateinit var viewModel : DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val station: Station = intent.getParcelableExtra(STATION)
-            ?: throw (IllegalStateException("Movie not found"))
-        presenter.onCreate(this, station)
+            ?: throw (IllegalStateException("Station not found"))
+
+        viewModel = ViewModelProvider(
+            this, DetailViewModelFactory(station)
+        )[DetailViewModel::class.java]
+
+        viewModel.model.observe(this, Observer (::updateUI))
     }
 
-    override fun updateUI(station: Station) = with(binding) {
+     private fun updateUI(model: DetailViewModel.UiModel) = with(binding) {
 
+        val station = model.station
         supportActionBar?.title = station.name
 
         binding.stationDetailInfo.setStation(station)
 
         when (station.light) {
             0 -> {
-                stationDetailInfo.setBackgroundResource(R.color.green_700)
-                root.setBackgroundResource(R.color.green_700)
+                updateColor(binding, R.color.green_700)
             }
             1 -> {
-                stationDetailInfo.setBackgroundResource(R.color.orange_700)
-                binding.root.setBackgroundResource(R.color.orange_700)
+                updateColor(binding, R.color.orange_700)
             }
             2 -> {
-                stationDetailInfo.setBackgroundResource(R.color.yellow_700)
-                root.setBackgroundResource(R.color.yellow_700)
+                updateColor(binding, R.color.yellow_700)
             }
             3 -> {
-                stationDetailInfo.setBackgroundResource(R.color.red_700)
-                root.setBackgroundResource(R.color.red_700)
+                updateColor(binding, R.color.red_700)
             }
         }
         if (station.freeBases == 0) {
-            stationDetailInfo.setBackgroundResource(R.color.red_700)
-            root.setBackgroundResource(R.color.red_700)
+            updateColor(binding, R.color.red_700)
         }
 
         fab.setOnClickListener {
@@ -59,11 +62,10 @@ class DetailActivity : AppCompatActivity() , DetailPresenter.View{
         }
     }
 
-    override fun onDestroy() {
-        presenter.onDestroy()
-        super.onDestroy()
+    private fun updateColor(binding : ActivityDetailBinding, color: Int){
+        binding.stationDetailInfo.setBackgroundResource(color)
+        binding.root.setBackgroundResource(color)
     }
-
 }
 
 
