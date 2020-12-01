@@ -20,39 +20,42 @@ class DetailActivity : AppCompatActivity() , DetailPresenter.View{
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter.onCreate(this, intent.getParcelableExtra<Station>(STATION))
+        val station: Station = intent.getParcelableExtra(STATION)
+            ?: throw (IllegalStateException("Movie not found"))
+        presenter.onCreate(this, station)
     }
 
-    override fun updateUI(station: Station?)  {
-        station?.let { mStation ->
-            supportActionBar?.title = mStation.name
+    override fun updateUI(station: Station) = with(binding) {
 
-            binding.stationDetailInfo.setStation(mStation)
+        supportActionBar?.title = station.name
 
-            when(mStation.light){
-                0 -> {binding.stationDetailInfo.setBackgroundResource(R.color.green_700)
-                    binding.root.setBackgroundResource(R.color.green_700)}
-                1 -> {binding.stationDetailInfo.setBackgroundResource(R.color.orange_700)
-                    binding.root.setBackgroundResource(R.color.orange_700)}
-                2 -> {binding.stationDetailInfo.setBackgroundResource(R.color.yellow_700)
-                    binding.root.setBackgroundResource(R.color.yellow_700)}
-                3 -> {binding.stationDetailInfo.setBackgroundResource(R.color.red_700)
-                    binding.root.setBackgroundResource(R.color.red_700)}
-            }
-            if(mStation.freeBases == 0){
-                binding.stationDetailInfo.setBackgroundResource(R.color.red_700)
-                binding.root.setBackgroundResource(R.color.red_700)
-            }
+        binding.stationDetailInfo.setStation(station)
 
-            binding.fab.setOnClickListener {
-                Toast.makeText(this@DetailActivity, mStation.name, Toast.LENGTH_LONG).show()
+        when (station.light) {
+            0 -> {
+                stationDetailInfo.setBackgroundResource(R.color.green_700)
+                root.setBackgroundResource(R.color.green_700)
             }
-        } ?: run {
-            Toast.makeText(
-                this,
-                "No ha sido posible recuperar la información de la estación.",
-                Toast.LENGTH_SHORT
-            ).show()
+            1 -> {
+                stationDetailInfo.setBackgroundResource(R.color.orange_700)
+                binding.root.setBackgroundResource(R.color.orange_700)
+            }
+            2 -> {
+                stationDetailInfo.setBackgroundResource(R.color.yellow_700)
+                root.setBackgroundResource(R.color.yellow_700)
+            }
+            3 -> {
+                stationDetailInfo.setBackgroundResource(R.color.red_700)
+                root.setBackgroundResource(R.color.red_700)
+            }
+        }
+        if (station.freeBases == 0) {
+            stationDetailInfo.setBackgroundResource(R.color.red_700)
+            root.setBackgroundResource(R.color.red_700)
+        }
+
+        fab.setOnClickListener {
+            Toast.makeText(this@DetailActivity, station.name, Toast.LENGTH_LONG).show()
         }
     }
 
