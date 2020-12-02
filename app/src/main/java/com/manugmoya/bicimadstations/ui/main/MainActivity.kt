@@ -51,15 +51,20 @@ class MainActivity : AppCompatActivity() {
         viewModel.model.observe(this, Observer {
             updateUi(it)
         })*/
+
+        viewModel.navigation.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let { station ->
+                startActivity<DetailActivity> {
+                    putExtra(DetailActivity.STATION, station)
+                }
+            }
+        })
     }
 
     private fun updateUi(model: MainViewModel.UiModel) {
         binding.progress.visibility = if (model == Loading) View.VISIBLE else View.GONE
         when (model) {
             is Content -> adapter.stationsList = model.stations
-            is Navigation -> startActivity<DetailActivity> {
-                putExtra(DetailActivity.STATION, model.station)
-            }
             RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequest()
             }

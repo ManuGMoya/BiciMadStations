@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.model.LocationRepository
 import com.manugmoya.bicimadstations.model.Station
 import com.manugmoya.bicimadstations.model.StationsRepository
+import com.manugmoya.bicimadstations.ui.common.Event
 import com.manugmoya.bicimadstations.ui.common.Scope
 import com.manugmoya.bicimadstations.ui.common.orderListByLocation
 import kotlinx.coroutines.async
@@ -17,19 +18,22 @@ class MainViewModel(
     private val stationsRepository: StationsRepository
 ) : ViewModel() ,Scope by Scope.Impl() {
 
-    sealed class UiModel{
-        object Loading : UiModel()
-        class Content(val stations : List<Station>) : UiModel()
-        class Navigation(val station: Station) : UiModel()
-        object RequestLocationPermission: UiModel()
-    }
-
     private val _model = MutableLiveData<UiModel>()
     val model : LiveData<UiModel>
         get() {
             if(_model.value == null) refresh()
             return _model
         }
+
+    private val _navigation = MutableLiveData<Event<Station>>()
+    val navigation : LiveData<Event<Station>> = _navigation
+
+    sealed class UiModel{
+        object Loading : UiModel()
+        class Content(val stations : List<Station>) : UiModel()
+        object RequestLocationPermission: UiModel()
+    }
+
 
     init {
         initScope()
@@ -53,7 +57,7 @@ class MainViewModel(
     }
 
     fun onStationClicked(station: Station) {
-        _model.value = UiModel.Navigation(station)
+        _navigation.value = Event(station)
     }
 
     override fun onCleared() {
