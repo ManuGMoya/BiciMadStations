@@ -60,12 +60,3 @@ class MainViewModel(
         cancelScope()
     }
 }
-
-@Suppress("UNCHECKED_CAST")
-class MainViewModelFactory(private val locationRepository: LocationRepository, private val stationsRepository: StationsRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        MainViewModel(locationRepository,stationsRepository) as T
-
-
-}

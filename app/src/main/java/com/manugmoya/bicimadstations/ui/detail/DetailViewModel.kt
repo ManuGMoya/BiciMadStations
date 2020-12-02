@@ -27,10 +27,3 @@ class DetailViewModel(private val station: Station) : ViewModel() ,Scope by Scop
     }
 
 }
-
-@Suppress("UNCHECKED_CAST")
-class DetailViewModelFactory(private val station: Station) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        DetailViewModel(station) as T
-
-}
