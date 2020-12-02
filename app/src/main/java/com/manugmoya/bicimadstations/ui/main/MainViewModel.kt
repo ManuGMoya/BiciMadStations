@@ -21,6 +21,7 @@ class MainViewModel(
         object Loading : UiModel()
         class Content(val stations : List<Station>) : UiModel()
         class Navigation(val station: Station) : UiModel()
+        object RequestLocationPermission: UiModel()
     }
 
     private val _model = MutableLiveData<UiModel>()
@@ -35,6 +36,10 @@ class MainViewModel(
     }
 
     private fun refresh() {
+        _model.value = UiModel.RequestLocationPermission
+    }
+
+    fun onCoarsePermissionRequest() {
         launch {
             _model.value = UiModel.Loading
             val location = async { locationRepository.getLocation()}

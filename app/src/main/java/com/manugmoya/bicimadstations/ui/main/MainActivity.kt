@@ -1,9 +1,11 @@
 package com.manugmoya.bicimadstations.ui.main
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.manugmoya.bicimadstations.PermissionRequester
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
 import com.manugmoya.bicimadstations.model.LocationRepository
 import com.manugmoya.bicimadstations.model.StationsRepository
@@ -17,7 +19,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: StationsAdapter
-
+    private val coarsePermissionRequester = PermissionRequester(this,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Uso de función genérica
-        viewModel = getViewModel { MainViewModel(LocationRepository(this), StationsRepository()) }
+        viewModel = getViewModel { MainViewModel(LocationRepository(application), StationsRepository()) }
 
 /*        // Es lo mismo que
         viewModel = ViewModelProvider(
@@ -55,6 +59,9 @@ class MainActivity : AppCompatActivity() {
             is Content -> adapter.stationsList = model.stations
             is Navigation -> startActivity<DetailActivity> {
                 putExtra(DetailActivity.STATION, model.station)
+            }
+            RequestLocationPermission -> coarsePermissionRequester.request {
+                viewModel.onCoarsePermissionRequest()
             }
         }
     }
