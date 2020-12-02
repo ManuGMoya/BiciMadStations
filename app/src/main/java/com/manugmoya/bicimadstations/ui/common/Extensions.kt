@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.model.Station
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -42,4 +45,14 @@ suspend fun List<Station>.orderListByLocation(location: Location) : List<Station
         }
         this@orderListByLocation.sortedBy { it.distanceTo }
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T : ViewModel> FragmentActivity.getViewModel(crossinline factory: () -> T): T {
+
+    val vmFactory = object : ViewModelProvider.Factory {
+        override fun <U : ViewModel> create(modelClass: Class<U>): U = factory() as U
+    }
+
+    return ViewModelProvider(this, vmFactory)[T::class.java]
 }
