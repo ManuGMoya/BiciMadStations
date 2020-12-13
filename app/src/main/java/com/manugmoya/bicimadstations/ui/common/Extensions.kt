@@ -12,7 +12,7 @@ import androidx.core.text.bold
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.manugmoya.bicimadstations.model.Station
+import com.manugmoya.bicimadstations.model.server.Station
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

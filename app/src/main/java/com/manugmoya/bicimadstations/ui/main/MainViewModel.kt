@@ -3,10 +3,9 @@ package com.manugmoya.bicimadstations.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.model.LocationRepository
-import com.manugmoya.bicimadstations.model.Station
-import com.manugmoya.bicimadstations.model.StationsRepository
+import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.bicimadstations.model.server.StationsRepository
 import com.manugmoya.bicimadstations.ui.common.Event
 import com.manugmoya.bicimadstations.ui.common.Scope
 import com.manugmoya.bicimadstations.ui.common.orderListByLocation

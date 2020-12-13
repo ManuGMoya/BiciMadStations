@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ItemStationBinding
 import com.manugmoya.bicimadstations.ui.common.inflate
-import com.manugmoya.bicimadstations.model.Station
+import com.manugmoya.bicimadstations.model.server.Station
 import kotlin.properties.Delegates
 
 class StationsAdapter(

@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations.model
+package com.manugmoya.bicimadstations.model.server
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

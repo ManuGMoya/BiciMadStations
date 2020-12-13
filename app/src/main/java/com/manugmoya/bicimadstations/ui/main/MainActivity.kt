@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.PermissionRequester
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
 import com.manugmoya.bicimadstations.model.LocationRepository
-import com.manugmoya.bicimadstations.model.StationsRepository
+import com.manugmoya.bicimadstations.model.server.StationsRepository
 import com.manugmoya.bicimadstations.ui.common.getViewModel
 import com.manugmoya.bicimadstations.ui.common.startActivity
 import com.manugmoya.bicimadstations.ui.detail.DetailActivity

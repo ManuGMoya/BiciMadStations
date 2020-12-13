@@ -1,4 +1,7 @@
-package com.manugmoya.bicimadstations.model
+package com.manugmoya.bicimadstations.model.server
+
+import com.manugmoya.bicimadstations.model.EMAIL
+import com.manugmoya.bicimadstations.model.PASSWORD
 
 class StationsRepository {
 
