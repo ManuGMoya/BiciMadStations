@@ -71,11 +71,6 @@ data class Station(
 
 @Parcelize
 data class Geometry(
-    val type: Type,
     val coordinates: List<Double>
 ) : Parcelable
 
-
-enum class Type {
-    Point
-}

@@ -12,6 +12,7 @@ import androidx.core.text.bold
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.manugmoya.bicimadstations.StationApp
 import com.manugmoya.bicimadstations.model.server.Station
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -56,3 +57,6 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(crossinline fac
 
     return ViewModelProvider(this, vmFactory)[T::class.java]
 }
+
+val Context.app: StationApp
+    get() = applicationContext as StationApp
