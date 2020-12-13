@@ -1,15 +1,15 @@
 package com.manugmoya.bicimadstations.model.database
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.manugmoya.bicimadstations.model.server.Geometry
 
 
 @Entity
 data class StationDB (
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey val id: Long,
     var distanceTo: Float,
     val name: String,
     val light: Int,
@@ -25,10 +25,6 @@ data class StationDB (
     val favorite: Boolean
 )
 
-@Entity
-data class Geometry(
-    val coordinates: List<Double>
-)
 
 class Converters {
     @TypeConverter

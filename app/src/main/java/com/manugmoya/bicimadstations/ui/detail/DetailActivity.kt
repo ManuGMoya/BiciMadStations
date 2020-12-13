@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
 import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.bicimadstations.model.server.StationsRepository
+import com.manugmoya.bicimadstations.ui.common.app
 import com.manugmoya.bicimadstations.ui.common.getViewModel
 
 class DetailActivity : AppCompatActivity(){
@@ -22,13 +24,13 @@ class DetailActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val station: Station = intent.getParcelableExtra(STATION)
+        val stationId = intent.getLongExtra(STATION, -1L)
             ?: throw (IllegalStateException("Station not found"))
 
 /*        viewModel = ViewModelProvider(
             this, DetailViewModelFactory(station)
         )[DetailViewModel::class.java]*/
-        viewModel = getViewModel {DetailViewModel(station)}
+        viewModel = getViewModel {DetailViewModel(stationId, StationsRepository(app))}
 
         viewModel.model.observe(this, Observer (::updateUI))
     }

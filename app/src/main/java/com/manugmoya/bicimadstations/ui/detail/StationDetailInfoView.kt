@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.buildSpannedString
 import com.manugmoya.bicimadstations.R
+import com.manugmoya.bicimadstations.model.database.StationDB
 import com.manugmoya.bicimadstations.ui.common.appendInfo
 import com.manugmoya.bicimadstations.model.server.Station
 
@@ -15,7 +16,7 @@ class StationDetailInfoView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    fun setStation(station: Station) = with(station ){
+    fun setStation(station: StationDB) = with(station ){
         text = buildSpannedString {
 
             appendInfo(context, R.string.address, address)

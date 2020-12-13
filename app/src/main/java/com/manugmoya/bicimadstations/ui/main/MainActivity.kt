@@ -3,12 +3,14 @@ package com.manugmoya.bicimadstations.ui.main
 import android.Manifest
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.PermissionRequester
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
 import com.manugmoya.bicimadstations.model.LocationRepository
 import com.manugmoya.bicimadstations.model.server.StationsRepository
+import com.manugmoya.bicimadstations.ui.common.app
 import com.manugmoya.bicimadstations.ui.common.getViewModel
 import com.manugmoya.bicimadstations.ui.common.startActivity
 import com.manugmoya.bicimadstations.ui.detail.DetailActivity
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Uso de función genérica
-        viewModel = getViewModel { MainViewModel(LocationRepository(application), StationsRepository()) }
+        viewModel = getViewModel { MainViewModel(LocationRepository(application), StationsRepository(app)) }
 
 /*        // Es lo mismo que
         viewModel = ViewModelProvider(
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigation.observe(this, Observer { event ->
             event.getContentIfNotHandled()?.let { station ->
                 startActivity<DetailActivity> {
-                    putExtra(DetailActivity.STATION, station)
+                    putExtra(DetailActivity.STATION, station.id)
                 }
             }
         })
@@ -64,7 +66,17 @@ class MainActivity : AppCompatActivity() {
     private fun updateUi(model: MainViewModel.UiModel) {
         binding.progress.visibility = if (model == Loading) View.VISIBLE else View.GONE
         when (model) {
-            is Content -> adapter.stationsList = model.stations
+            is Content -> {
+                if(model.stations.isEmpty()){
+                    Toast.makeText(this,
+                        "No ha sido posible recuperar los datos. Comprueba tu conexión.",
+                    Toast.LENGTH_SHORT).show()
+                    return
+                }
+                adapter.stationsList = model.stations
+
+
+            }
             RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequest()
             }

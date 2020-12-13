@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.manugmoya.bicimadstations.model.LocationRepository
-import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.bicimadstations.model.database.StationDB
 import com.manugmoya.bicimadstations.model.server.StationsRepository
 import com.manugmoya.bicimadstations.ui.common.Event
 import com.manugmoya.bicimadstations.ui.common.Scope
@@ -24,12 +24,12 @@ class MainViewModel(
             return _model
         }
 
-    private val _navigation = MutableLiveData<Event<Station>>()
-    val navigation : LiveData<Event<Station>> = _navigation
+    private val _navigation = MutableLiveData<Event<StationDB>>()
+    val navigation : LiveData<Event<StationDB>> = _navigation
 
     sealed class UiModel{
         object Loading : UiModel()
-        class Content(val stations : List<Station>) : UiModel()
+        class Content(val stations : List<StationDB>) : UiModel()
         object RequestLocationPermission: UiModel()
     }
 
@@ -55,7 +55,7 @@ class MainViewModel(
         }
     }
 
-    fun onStationClicked(station: Station) {
+    fun onStationClicked(station: StationDB) {
         _navigation.value = Event(station)
     }
 
