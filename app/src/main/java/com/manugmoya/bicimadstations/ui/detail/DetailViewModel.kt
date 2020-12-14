@@ -32,4 +32,11 @@ class DetailViewModel(private val stationId: Long, private val repository: Stati
         _model.value = UiModel(repository.findById(stationId))
     }
 
+    fun onFavoriteClicked() = launch {
+        _model.value?.station?.let {
+            val updatedStation = it.copy(favorite = !it.favorite)
+            _model.value = UiModel(updatedStation)
+            repository.update(updatedStation)
+        }
+    }
 }

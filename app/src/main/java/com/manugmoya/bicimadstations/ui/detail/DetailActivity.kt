@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity(){
         viewModel.model.observe(this, Observer (::updateUI))
     }
 
-     private fun updateUI(model: DetailViewModel.UiModel) = with(binding) {
+    private fun updateUI(model: DetailViewModel.UiModel) = with(binding) {
 
         val station = model.station
         supportActionBar?.title = station.name
@@ -61,8 +61,11 @@ class DetailActivity : AppCompatActivity(){
         }
 
         fab.setOnClickListener {
-            Toast.makeText(this@DetailActivity, station.name, Toast.LENGTH_LONG).show()
+            viewModel.onFavoriteClicked()
         }
+
+        val icon = if(station.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+        fab.setImageDrawable(getDrawable(icon))
     }
 
     private fun updateColor(binding : ActivityDetailBinding, color: Int){

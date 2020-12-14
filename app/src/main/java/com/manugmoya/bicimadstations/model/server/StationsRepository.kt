@@ -35,6 +35,10 @@ class StationsRepository(application: StationApp) {
         db.stationDao().findById(id)
     }
 
+    suspend fun update(stationDB: StationDB) = withContext(Dispatchers.IO) {
+        db.stationDao().updateStation(stationDB)
+    }
+
 }
 private fun Station.convertToStationDb() =
     StationDB(
