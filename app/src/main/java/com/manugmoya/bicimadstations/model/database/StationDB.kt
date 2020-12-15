@@ -22,7 +22,7 @@ data class StationDB (
     val freeBases: Int,
     val reservationsCount: Int,
     val geometry: Geometry,
-    val favorite: Boolean
+    var favorite: Boolean
 )
 
 
@@ -37,3 +37,8 @@ class Converters {
         return Gson().fromJson(value, Geometry::class.java)
     }
 }
+
+@Entity
+data class Favorite(
+    @PrimaryKey val id: Long
+)

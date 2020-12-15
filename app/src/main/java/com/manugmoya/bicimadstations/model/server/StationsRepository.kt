@@ -3,6 +3,7 @@ package com.manugmoya.bicimadstations.model.server
 import com.manugmoya.bicimadstations.StationApp
 import com.manugmoya.bicimadstations.model.EMAIL
 import com.manugmoya.bicimadstations.model.PASSWORD
+import com.manugmoya.bicimadstations.model.database.Favorite
 import com.manugmoya.bicimadstations.model.database.StationDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,7 +29,18 @@ class StationsRepository(application: StationApp) {
             station.convertToStationDb()
         }?.let { db.stationDao().insertStations(it) }
 
-        db.stationDao().getall()
+        val favs = db.stationDao().getallFavs()
+
+        val list: List<StationDB> = db.stationDao().getall()
+
+        list.forEach {
+            if(favs.contains(Favorite(it.id))) {
+                it.favorite = true
+            }
+        }
+        db.stationDao().insertStations(list)
+
+        list
     }
 
     suspend fun findById(id: Long) : StationDB = withContext(Dispatchers.IO) {
@@ -37,6 +49,14 @@ class StationsRepository(application: StationApp) {
 
     suspend fun update(stationDB: StationDB) = withContext(Dispatchers.IO) {
         db.stationDao().updateStation(stationDB)
+    }
+
+    suspend fun insertFav(fav: Favorite) = withContext(Dispatchers.IO) {
+        db.stationDao().insertFavorite(fav)
+    }
+
+    suspend fun deleteFav(fav: Favorite) = withContext(Dispatchers.IO) {
+        db.stationDao().deleteFavorite(fav)
     }
 
 }

@@ -3,6 +3,7 @@ package com.manugmoya.bicimadstations.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.manugmoya.bicimadstations.model.database.Favorite
 import com.manugmoya.bicimadstations.model.database.StationDB
 import com.manugmoya.bicimadstations.model.server.Station
 import com.manugmoya.bicimadstations.model.server.StationsRepository
@@ -35,6 +36,13 @@ class DetailViewModel(private val stationId: Long, private val repository: Stati
     fun onFavoriteClicked() = launch {
         _model.value?.station?.let {
             val updatedStation = it.copy(favorite = !it.favorite)
+
+            if(updatedStation.favorite){
+                repository.insertFav(Favorite(updatedStation.id))
+            }else{
+                repository.deleteFav(Favorite(updatedStation.id))
+            }
+
             _model.value = UiModel(updatedStation)
             repository.update(updatedStation)
         }
