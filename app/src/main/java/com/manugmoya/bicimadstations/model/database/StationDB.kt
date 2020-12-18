@@ -21,8 +21,7 @@ data class StationDB (
     val dockBikes: Int,
     val freeBases: Int,
     val reservationsCount: Int,
-    val geometry: Geometry,
-    var favorite: Boolean
+    val geometry: Geometry
 )
 
 

@@ -30,5 +30,5 @@ interface StationDao {
     fun deleteFavorite(fav: Favorite)
 
     @Query("SELECT * FROM Favorite WHERE id = :id")
-    fun findFavById(id: Long): Favorite
+    fun findFavById(id: Long): Favorite?
 }

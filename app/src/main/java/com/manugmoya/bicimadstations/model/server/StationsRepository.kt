@@ -29,18 +29,7 @@ class StationsRepository(application: StationApp) {
             station.convertToStationDb()
         }?.let { db.stationDao().insertStations(it) }
 
-        val favs = db.stationDao().getallFavs()
-
-        val list: List<StationDB> = db.stationDao().getall()
-
-        list.forEach {
-            if(favs.contains(Favorite(it.id))) {
-                it.favorite = true
-            }
-        }
-        db.stationDao().insertStations(list)
-
-        list
+        db.stationDao().getall()
     }
 
     suspend fun findById(id: Long) : StationDB = withContext(Dispatchers.IO) {
@@ -59,6 +48,10 @@ class StationsRepository(application: StationApp) {
         db.stationDao().deleteFavorite(fav)
     }
 
+    suspend fun isFavorite(id: Long) : Favorite? = withContext(Dispatchers.IO) {
+        db.stationDao().findFavById(id)
+    }
+
 }
 private fun Station.convertToStationDb() =
     StationDB(
@@ -74,6 +67,5 @@ private fun Station.convertToStationDb() =
         dockBikes,
         freeBases,
         reservationsCount,
-        geometry,
-        false
+        geometry
     )

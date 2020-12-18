@@ -33,6 +33,11 @@ class DetailActivity : AppCompatActivity(){
         viewModel = getViewModel {DetailViewModel(stationId, StationsRepository(app))}
 
         viewModel.model.observe(this, Observer (::updateUI))
+
+        viewModel.favorite.observe(this, { favorite ->
+            val icon = if(favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+            binding.fab.setImageDrawable(getDrawable(icon))
+        })
     }
 
     private fun updateUI(model: DetailViewModel.UiModel) = with(binding) {
@@ -63,9 +68,6 @@ class DetailActivity : AppCompatActivity(){
         fab.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
-
-        val icon = if(station.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
-        fab.setImageDrawable(getDrawable(icon))
     }
 
     private fun updateColor(binding : ActivityDetailBinding, color: Int){

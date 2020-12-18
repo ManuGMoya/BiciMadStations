@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.manugmoya.bicimadstations.model.database.Favorite
 import com.manugmoya.bicimadstations.model.database.StationDB
-import com.manugmoya.bicimadstations.model.server.Station
 import com.manugmoya.bicimadstations.model.server.StationsRepository
+import com.manugmoya.bicimadstations.ui.common.Event
 import com.manugmoya.bicimadstations.ui.common.Scope
 import kotlinx.coroutines.launch
 
@@ -21,6 +21,9 @@ class DetailViewModel(private val stationId: Long, private val repository: Stati
             return _model
         }
 
+    private var _favorite = MutableLiveData<Boolean>()
+    val favorite : LiveData<Boolean> = _favorite
+
     init {
         initScope()
     }
@@ -31,20 +34,24 @@ class DetailViewModel(private val stationId: Long, private val repository: Stati
 
     private fun findStation() = launch {
         _model.value = UiModel(repository.findById(stationId))
+        setFavorite()
     }
 
     fun onFavoriteClicked() = launch {
-        _model.value?.station?.let {
-            val updatedStation = it.copy(favorite = !it.favorite)
+        val isFavorite = repository.isFavorite(stationId)
 
-            if(updatedStation.favorite){
-                repository.insertFav(Favorite(updatedStation.id))
-            }else{
-                repository.deleteFav(Favorite(updatedStation.id))
-            }
-
-            _model.value = UiModel(updatedStation)
-            repository.update(updatedStation)
+        if(isFavorite != null){
+            repository.deleteFav(Favorite(stationId))
+            _favorite.value = false
+        }else{
+            repository.insertFav(Favorite(stationId))
+            _favorite.value = true
         }
+
+    }
+
+    private fun setFavorite()= launch {
+        val isFavorite = repository.isFavorite(stationId)
+        _favorite.value = isFavorite != null
     }
 }
