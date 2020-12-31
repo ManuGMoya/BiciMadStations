@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.StationApp
 import com.manugmoya.bicimadstations.model.database.StationDB
 import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.domain.StationDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -36,7 +37,7 @@ inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit)
     startActivity(intentFor<T>(body))
 }
 
-suspend fun List<StationDB>.orderListByLocation(location: Location) : List<StationDB> {
+suspend fun List<StationDomain>.orderListByLocation(location: Location) : List<StationDomain> {
     return withContext(Dispatchers.Default) {
         this@orderListByLocation.forEach {
             val stationLocation = Location("").apply {

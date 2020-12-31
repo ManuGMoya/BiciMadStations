@@ -1,15 +1,21 @@
 package com.manugmoya.bicimadstations.ui.detail
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
-import com.manugmoya.bicimadstations.model.server.Station
-import com.manugmoya.bicimadstations.model.server.StationsRepository
+import com.manugmoya.bicimadstations.model.EMAIL
+import com.manugmoya.bicimadstations.model.PASSWORD
+import com.manugmoya.bicimadstations.model.database.RoomDataSource
+import com.manugmoya.bicimadstations.model.server.TheStationDbDatasource
 import com.manugmoya.bicimadstations.ui.common.app
 import com.manugmoya.bicimadstations.ui.common.getViewModel
+import com.manugmoya.data.repository.StationRepository
+import com.manugmoya.usecases.DeleteFavorite
+import com.manugmoya.usecases.FindStationById
+import com.manugmoya.usecases.InsertFavorite
+import com.manugmoya.usecases.IsFavorite
 
 class DetailActivity : AppCompatActivity(){
 
@@ -25,12 +31,27 @@ class DetailActivity : AppCompatActivity(){
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val stationId = intent.getLongExtra(STATION, -1L)
-            ?: throw (IllegalStateException("Station not found"))
 
 /*        viewModel = ViewModelProvider(
             this, DetailViewModelFactory(station)
         )[DetailViewModel::class.java]*/
-        viewModel = getViewModel {DetailViewModel(stationId, StationsRepository(app))}
+        viewModel = getViewModel {
+            val stationsRepository = StationRepository(
+                RoomDataSource(app.db),
+                TheStationDbDatasource(),
+                EMAIL,
+                PASSWORD
+            )
+
+
+            DetailViewModel(
+                stationId,
+                FindStationById(stationsRepository),
+                InsertFavorite(stationsRepository),
+                DeleteFavorite(stationsRepository),
+                IsFavorite(stationsRepository)
+                )
+        }
 
         viewModel.model.observe(this, Observer (::updateUI))
 

@@ -6,7 +6,6 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.manugmoya.bicimadstations.model.server.Geometry
 
-
 @Entity
 data class StationDB (
     @PrimaryKey val id: Long,

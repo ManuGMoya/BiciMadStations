@@ -8,13 +8,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.PermissionRequester
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
-import com.manugmoya.bicimadstations.model.LocationRepository
-import com.manugmoya.bicimadstations.model.server.StationsRepository
+import com.manugmoya.bicimadstations.model.AndroidPermissionChecker
+import com.manugmoya.bicimadstations.model.EMAIL
+import com.manugmoya.bicimadstations.model.PASSWORD
+import com.manugmoya.bicimadstations.model.PlayServicesLocationDataSourcee
+import com.manugmoya.bicimadstations.model.database.RoomDataSource
+import com.manugmoya.bicimadstations.model.server.TheStationDbDatasource
 import com.manugmoya.bicimadstations.ui.common.app
 import com.manugmoya.bicimadstations.ui.common.getViewModel
 import com.manugmoya.bicimadstations.ui.common.startActivity
 import com.manugmoya.bicimadstations.ui.detail.DetailActivity
 import com.manugmoya.bicimadstations.ui.main.MainViewModel.UiModel.*
+import com.manugmoya.data.repository.LocationRepository
+import com.manugmoya.data.repository.StationRepository
+import com.manugmoya.usecases.GetDataStations
+import com.manugmoya.usecases.GetLocation
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,15 +39,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Uso de función genérica
-        viewModel = getViewModel { MainViewModel(LocationRepository(application), StationsRepository(app)) }
+        viewModel = getViewModel {
 
-/*        // Es lo mismo que
-        viewModel = ViewModelProvider(
-            this, MainViewModelFactory(
-                LocationRepository(this),
-                StationsRepository()
-            )
-        )[MainViewModel::class.java]*/
+            val localDataSource = RoomDataSource(app.db)
+
+            MainViewModel(
+            GetLocation(LocationRepository(
+                PlayServicesLocationDataSourcee(app),
+                AndroidPermissionChecker(app)
+            )),
+            GetDataStations(
+            StationRepository(localDataSource,TheStationDbDatasource(),EMAIL, PASSWORD)
+        )) }
 
         adapter = StationsAdapter(this, viewModel::onStationClicked)
 /*        // Es lo mismo que:
