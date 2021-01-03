@@ -1,12 +1,11 @@
 package com.manugmoya.bicimadstations.ui.main
 
-import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.manugmoya.bicimadstations.model.toLocation
 import com.manugmoya.bicimadstations.ui.common.Event
 import com.manugmoya.bicimadstations.ui.common.ScopedViewModel
 import com.manugmoya.bicimadstations.ui.common.orderListByLocation
-import com.manugmoya.domain.LocationDomain
 import com.manugmoya.domain.StationDomain
 import com.manugmoya.usecases.GetDataStations
 import com.manugmoya.usecases.GetLocation
@@ -56,10 +55,5 @@ class MainViewModel(
         _navigation.value = Event(station)
     }
 
-}
-
-fun LocationDomain.toLocation() = Location("").apply {
-    this.latitude
-    this.longitude
 }
 

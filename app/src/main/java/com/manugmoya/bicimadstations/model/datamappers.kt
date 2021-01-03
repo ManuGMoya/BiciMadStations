@@ -1,9 +1,11 @@
 package com.manugmoya.bicimadstations.model
 
+import android.location.Location
 import com.manugmoya.bicimadstations.model.server.Geometry
 import com.manugmoya.bicimadstations.model.server.Station
 import com.manugmoya.domain.FavoriteDomain
 import com.manugmoya.domain.GeometryDomain
+import com.manugmoya.domain.LocationDomain
 import com.manugmoya.domain.StationDomain
 import com.manugmoya.bicimadstations.model.database.Favorite as FavoriteRoom
 import com.manugmoya.bicimadstations.model.database.StationDB as StationRoom
@@ -74,4 +76,17 @@ fun Station.toStationDomain() = StationDomain(
     geometry.toGeometryDomain()
 )
 
+// LOCATION
+fun Location.toLocationDomain(): LocationDomain =
+    LocationDomain(
+        this.latitude,
+        this.longitude
+    )
 
+fun LocationDomain.toLocation(): Location {
+    val location = Location("")
+    location.latitude = this.latitude
+    location.longitude = this.longitude
+
+    return location
+}

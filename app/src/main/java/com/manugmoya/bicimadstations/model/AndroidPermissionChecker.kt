@@ -16,5 +16,5 @@ class AndroidPermissionChecker(private val application: Application) : Permissio
 }
 
 private fun PermissionChecker.Permission.toAndroidId() = when(this) {
-    PermissionChecker.Permission.COARSE_LOCATION -> Manifest.permission.ACCESS_COARSE_LOCATION
+    PermissionChecker.Permission.FINE_LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
 }

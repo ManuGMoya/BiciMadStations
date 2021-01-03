@@ -15,10 +15,8 @@ class LocationRepository(
     }
 
     suspend fun getLocation() : LocationDomain {
-        val targetLocation = LocationDomain(0.0,0.0)
-        targetLocation.latitude = LATITUDE_MADRID_CENTER
-        targetLocation.longitude = LONGITUDE_MADRID_CENTER
-        return if (permissionChecker.check(PermissionChecker.Permission.COARSE_LOCATION)) {
+        val targetLocation = LocationDomain(LATITUDE_MADRID_CENTER,LONGITUDE_MADRID_CENTER)
+        return if (permissionChecker.check(PermissionChecker.Permission.FINE_LOCATION)) {
             locationDataSource.getLocation() ?: targetLocation
         }else{
             targetLocation
@@ -31,7 +29,7 @@ class LocationRepository(
 
 interface PermissionChecker {
 
-    enum class Permission { COARSE_LOCATION }
+    enum class Permission { FINE_LOCATION }
 
     suspend fun check(permission: Permission): Boolean
 }
