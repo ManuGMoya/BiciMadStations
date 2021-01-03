@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations.model
+package com.manugmoya.bicimadstations.data
 
 import android.Manifest
 import android.app.Application

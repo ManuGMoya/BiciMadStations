@@ -1,14 +1,14 @@
-package com.manugmoya.bicimadstations.model
+package com.manugmoya.bicimadstations.data
 
 import android.location.Location
-import com.manugmoya.bicimadstations.model.server.Geometry
-import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.bicimadstations.data.server.Geometry
+import com.manugmoya.bicimadstations.data.server.Station
 import com.manugmoya.domain.FavoriteDomain
 import com.manugmoya.domain.GeometryDomain
 import com.manugmoya.domain.LocationDomain
 import com.manugmoya.domain.StationDomain
-import com.manugmoya.bicimadstations.model.database.Favorite as FavoriteRoom
-import com.manugmoya.bicimadstations.model.database.StationDB as StationRoom
+import com.manugmoya.bicimadstations.data.database.Favorite as FavoriteRoom
+import com.manugmoya.bicimadstations.data.database.StationDB as StationRoom
 
 // ROOM
 fun StationDomain.toStationRoom() = StationRoom(

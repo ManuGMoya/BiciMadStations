@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations.model.database
+package com.manugmoya.bicimadstations.data.database
 
 import androidx.room.*
 

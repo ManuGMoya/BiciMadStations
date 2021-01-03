@@ -2,7 +2,7 @@ package com.manugmoya.bicimadstations.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.manugmoya.bicimadstations.model.toLocation
+import com.manugmoya.bicimadstations.data.toLocation
 import com.manugmoya.bicimadstations.ui.common.Event
 import com.manugmoya.bicimadstations.ui.common.ScopedViewModel
 import com.manugmoya.bicimadstations.ui.common.orderListByLocation

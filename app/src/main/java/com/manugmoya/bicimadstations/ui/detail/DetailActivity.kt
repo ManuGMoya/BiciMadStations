@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
-import com.manugmoya.bicimadstations.model.EMAIL
-import com.manugmoya.bicimadstations.model.PASSWORD
-import com.manugmoya.bicimadstations.model.database.RoomDataSource
-import com.manugmoya.bicimadstations.model.server.TheStationDbDatasource
+import com.manugmoya.bicimadstations.data.EMAIL
+import com.manugmoya.bicimadstations.data.PASSWORD
+import com.manugmoya.bicimadstations.data.database.RoomDataSource
+import com.manugmoya.bicimadstations.data.server.TheStationDbDatasource
 import com.manugmoya.bicimadstations.ui.common.app
 import com.manugmoya.bicimadstations.ui.common.getViewModel
 import com.manugmoya.data.repository.StationRepository

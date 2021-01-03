@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations.model.server
+package com.manugmoya.bicimadstations.data.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

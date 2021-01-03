@@ -2,8 +2,8 @@ package com.manugmoya.bicimadstations.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.manugmoya.bicimadstations.model.database.StationDB
-import com.manugmoya.bicimadstations.model.toStationRoom
+import com.manugmoya.bicimadstations.data.database.StationDB
+import com.manugmoya.bicimadstations.data.toStationRoom
 import com.manugmoya.bicimadstations.ui.common.ScopedViewModel
 import com.manugmoya.usecases.DeleteFavorite
 import com.manugmoya.usecases.FindStationById

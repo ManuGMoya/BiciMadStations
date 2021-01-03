@@ -5,9 +5,8 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.buildSpannedString
 import com.manugmoya.bicimadstations.R
-import com.manugmoya.bicimadstations.model.database.StationDB
+import com.manugmoya.bicimadstations.data.database.StationDB
 import com.manugmoya.bicimadstations.ui.common.appendInfo
-import com.manugmoya.bicimadstations.model.server.Station
 
 
 class StationDetailInfoView : AppCompatTextView {

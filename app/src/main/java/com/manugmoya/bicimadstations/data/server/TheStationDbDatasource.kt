@@ -1,8 +1,8 @@
-package com.manugmoya.bicimadstations.model.server
+package com.manugmoya.bicimadstations.data.server
 
-import com.manugmoya.bicimadstations.model.EMAIL
-import com.manugmoya.bicimadstations.model.PASSWORD
-import com.manugmoya.bicimadstations.model.toStationDomain
+import com.manugmoya.bicimadstations.data.EMAIL
+import com.manugmoya.bicimadstations.data.PASSWORD
+import com.manugmoya.bicimadstations.data.toStationDomain
 import com.manugmoya.data.source.RemoteDatasource
 import com.manugmoya.domain.StationDomain
 

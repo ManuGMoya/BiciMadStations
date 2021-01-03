@@ -1,9 +1,9 @@
-package com.manugmoya.bicimadstations.model.database
+package com.manugmoya.bicimadstations.data.database
 
-import com.manugmoya.bicimadstations.model.toFavoriteDomain
-import com.manugmoya.bicimadstations.model.toFavoriteRoom
-import com.manugmoya.bicimadstations.model.toStationDomain
-import com.manugmoya.bicimadstations.model.toStationRoom
+import com.manugmoya.bicimadstations.data.toFavoriteDomain
+import com.manugmoya.bicimadstations.data.toFavoriteRoom
+import com.manugmoya.bicimadstations.data.toStationDomain
+import com.manugmoya.bicimadstations.data.toStationRoom
 import com.manugmoya.data.source.LocalDataSource
 import com.manugmoya.domain.FavoriteDomain
 import com.manugmoya.domain.StationDomain
