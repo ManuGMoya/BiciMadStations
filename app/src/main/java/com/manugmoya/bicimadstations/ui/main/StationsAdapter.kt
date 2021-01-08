@@ -7,17 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ItemStationBinding
-import com.manugmoya.bicimadstations.model.database.StationDB
 import com.manugmoya.bicimadstations.ui.common.inflate
-import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.domain.StationDomain
 import kotlin.properties.Delegates
 
 class StationsAdapter(
     private val context: Context,
-    private val listener: (StationDB) -> Unit
+    private val listener: (StationDomain) -> Unit
 ) : RecyclerView.Adapter<StationsAdapter.ItemViewHolder>() {
 
-    var stationsList: List<StationDB> by Delegates.observable(emptyList()) { _, old, new ->
+    var stationsList: List<StationDomain> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
                 old[oldItemPosition].id == new[newItemPosition].id
@@ -51,7 +50,7 @@ class StationsAdapter(
 
     inner class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemStationBinding.bind(view)
-        fun bind(station: StationDB) = with(binding){
+        fun bind(station: StationDomain) = with(binding){
             tvStationTitle.text = "${context.getString(R.string.station_name)}: "
             tvStationAddressTitle.text = "${context.getString(R.string.station_address)}: "
             tvStationName.text = station.name

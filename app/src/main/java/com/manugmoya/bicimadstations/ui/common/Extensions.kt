@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.StationApp
-import com.manugmoya.bicimadstations.model.database.StationDB
-import com.manugmoya.bicimadstations.model.server.Station
+import com.manugmoya.domain.StationDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -36,16 +36,16 @@ inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit)
     startActivity(intentFor<T>(body))
 }
 
-suspend fun List<StationDB>.orderListByLocation(location: Location) : List<StationDB> {
+suspend fun List<StationDomain>.orderListByLocation(location: Location) : List<StationDomain> {
     return withContext(Dispatchers.Default) {
-        this@orderListByLocation.forEach {
+        forEach {
             val stationLocation = Location("").apply {
                 longitude = it.geometry.coordinates[0]
                 latitude = it.geometry.coordinates[1]
             }
             it.distanceTo = location.distanceTo(stationLocation)
         }
-        this@orderListByLocation.sortedBy { it.distanceTo }
+        sortedBy { it.distanceTo }
     }
 }
 
@@ -61,3 +61,8 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(crossinline fac
 
 val Context.app: StationApp
     get() = applicationContext as StationApp
+
+fun Context.isGPSEnabled(): Boolean {
+    val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+}
