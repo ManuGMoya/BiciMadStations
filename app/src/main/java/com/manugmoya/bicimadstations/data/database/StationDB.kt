@@ -1,10 +1,10 @@
-package com.manugmoya.bicimadstations.model.database
+package com.manugmoya.bicimadstations.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.manugmoya.bicimadstations.model.server.Geometry
+import com.manugmoya.bicimadstations.data.server.Geometry
 
 
 @Entity

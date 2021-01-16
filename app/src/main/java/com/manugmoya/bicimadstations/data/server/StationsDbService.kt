@@ -1,4 +1,4 @@
-package com.manugmoya.bicimadstations.model.server
+package com.manugmoya.bicimadstations.data.server
 
 import retrofit2.http.GET
 import retrofit2.http.Header

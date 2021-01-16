@@ -1,28 +1,37 @@
 package com.manugmoya.bicimadstations.ui.main
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.PermissionRequester
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
-import com.manugmoya.bicimadstations.model.LocationRepository
-import com.manugmoya.bicimadstations.model.server.StationsRepository
-import com.manugmoya.bicimadstations.ui.common.app
-import com.manugmoya.bicimadstations.ui.common.getViewModel
-import com.manugmoya.bicimadstations.ui.common.startActivity
+import com.manugmoya.bicimadstations.data.AndroidPermissionChecker
+import com.manugmoya.bicimadstations.data.EMAIL
+import com.manugmoya.bicimadstations.data.PASSWORD
+import com.manugmoya.bicimadstations.data.PlayServicesLocationDataSource
+import com.manugmoya.bicimadstations.data.database.RoomDataSource
+import com.manugmoya.bicimadstations.data.server.TheStationDbDataSource
+import com.manugmoya.bicimadstations.ui.common.*
 import com.manugmoya.bicimadstations.ui.detail.DetailActivity
 import com.manugmoya.bicimadstations.ui.main.MainViewModel.UiModel.*
+import com.manugmoya.data.repository.LocationRepository
+import com.manugmoya.data.repository.StationRepository
+import com.manugmoya.usecases.GetDataStations
+import com.manugmoya.usecases.GetLocation
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: StationsAdapter
-    private val coarsePermissionRequester = PermissionRequester(this,
-        Manifest.permission.ACCESS_COARSE_LOCATION
+    private val coarsePermissionRequester = PermissionRequester(
+        this,
+        Manifest.permission.ACCESS_FINE_LOCATION
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +39,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Uso de función genérica
-        viewModel = getViewModel { MainViewModel(LocationRepository(application), StationsRepository(app)) }
+        GpsUtils(this).turnGPSOn(object : GpsUtils.OnGpsListener {
+            override fun gpsStatus(isGPSEnable: Boolean) {
+                // turn on GPS
+                setViewModel()
+            }
+        })
+    }
 
-/*        // Es lo mismo que
-        viewModel = ViewModelProvider(
-            this, MainViewModelFactory(
-                LocationRepository(this),
-                StationsRepository()
+    private fun setViewModel() {
+        // Uso de función genérica
+        viewModel = getViewModel {
+            val localDataSource = RoomDataSource(app.db)
+
+            MainViewModel(
+                GetLocation(
+                    LocationRepository(
+                        PlayServicesLocationDataSource(app),
+                        AndroidPermissionChecker(app)
+                    )
+                ),
+                GetDataStations(
+                    StationRepository(
+                        localDataSource,
+                        TheStationDbDataSource(),
+                        EMAIL,
+                        PASSWORD
+                    )
+                )
             )
-        )[MainViewModel::class.java]*/
+        }
 
         adapter = StationsAdapter(this, viewModel::onStationClicked)
 /*        // Es lo mismo que:
@@ -48,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }*/
         binding.rvStations.adapter = adapter
 
-        viewModel.model.observe(this, Observer (::updateUi))
+        viewModel.model.observe(this, Observer(::updateUi))
 /*        // Es lo mismo que:
         viewModel.model.observe(this, Observer {
             updateUi(it)
@@ -63,18 +92,30 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GPS_REQUEST) {
+                Log.d("", "GPS Activated")
+            }
+        }
+        setViewModel()
+    }
+
+
     private fun updateUi(model: MainViewModel.UiModel) {
         binding.progress.visibility = if (model == Loading) View.VISIBLE else View.GONE
         when (model) {
             is Content -> {
-                if(model.stations.isEmpty()){
-                    Toast.makeText(this,
+                if (model.stations.isEmpty()) {
+                    Toast.makeText(
+                        this,
                         "No ha sido posible recuperar los datos. Comprueba tu conexión.",
-                    Toast.LENGTH_SHORT).show()
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return
                 }
                 adapter.stationsList = model.stations
-
 
             }
             RequestLocationPermission -> coarsePermissionRequester.request {
