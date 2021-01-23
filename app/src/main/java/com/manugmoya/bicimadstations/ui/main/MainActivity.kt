@@ -7,32 +7,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.manugmoya.bicimadstations.ui.common.GpsUtils
-import com.manugmoya.bicimadstations.ui.common.GpsUtils.OnGpsListener
 import com.manugmoya.bicimadstations.PermissionRequester
 import com.manugmoya.bicimadstations.databinding.ActivityMainBinding
-import com.manugmoya.bicimadstations.data.AndroidPermissionChecker
-import com.manugmoya.bicimadstations.data.EMAIL
-import com.manugmoya.bicimadstations.data.PASSWORD
-import com.manugmoya.bicimadstations.data.PlayServicesLocationDataSource
-import com.manugmoya.bicimadstations.data.database.RoomDataSource
-import com.manugmoya.bicimadstations.data.server.TheStationDbDatasource
-import com.manugmoya.bicimadstations.ui.common.GPS_REQUEST
-import com.manugmoya.bicimadstations.ui.common.app
-import com.manugmoya.bicimadstations.ui.common.getViewModel
-import com.manugmoya.bicimadstations.ui.common.startActivity
+import com.manugmoya.bicimadstations.ui.common.*
+import com.manugmoya.bicimadstations.ui.common.GpsUtils.OnGpsListener
 import com.manugmoya.bicimadstations.ui.detail.DetailActivity
 import com.manugmoya.bicimadstations.ui.main.MainViewModel.UiModel.*
-import com.manugmoya.data.repository.LocationRepository
-import com.manugmoya.data.repository.StationRepository
-import com.manugmoya.usecases.GetDataStations
-import com.manugmoya.usecases.GetLocation
 
 class MainActivity : AppCompatActivity() {
 
     private var isGPS: Boolean = false
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy { getViewModel { app.component.mainViewModel  }}
     private lateinit var adapter: StationsAdapter
     private val coarsePermissionRequester = PermissionRequester(
         this,
@@ -55,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setViewModel(){
         // Uso de función genérica
-        viewModel = getViewModel {
+/*        viewModel = getViewModel {
 
             val localDataSource = RoomDataSource(app.db)
 
@@ -67,10 +53,10 @@ class MainActivity : AppCompatActivity() {
                     )
                 ),
                 GetDataStations(
-                    StationRepository(localDataSource, TheStationDbDatasource(), EMAIL, PASSWORD)
+                    StationRepository(localDataSource, TheStationDbDataSource(), EMAIL, PASSWORD)
                 )
             )
-        }
+        }*/
 
         adapter = StationsAdapter(this, viewModel::onStationClicked)
 /*        // Es lo mismo que:

@@ -3,10 +3,10 @@ package com.manugmoya.bicimadstations.data.server
 import com.manugmoya.bicimadstations.data.EMAIL
 import com.manugmoya.bicimadstations.data.PASSWORD
 import com.manugmoya.bicimadstations.data.toStationDomain
-import com.manugmoya.data.source.RemoteDatasource
+import com.manugmoya.data.source.RemoteDataSource
 import com.manugmoya.domain.StationDomain
 
-class TheStationDbDatasource : RemoteDatasource {
+class TheStationDbDataSource : RemoteDataSource {
 
     override suspend fun getToken(email: String, password: String): String? {
         return try {

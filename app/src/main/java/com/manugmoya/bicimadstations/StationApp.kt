@@ -1,21 +1,19 @@
 package com.manugmoya.bicimadstations
 
 import android.app.Application
-import androidx.room.Room
-import com.manugmoya.bicimadstations.data.database.StationDatabase
+import com.manugmoya.bicimadstations.di.DaggerMyStationsComponent
+import com.manugmoya.bicimadstations.di.MyStationsComponent
 
-class StationApp: Application() {
+class StationApp : Application() {
 
-    lateinit var db: StationDatabase
+    lateinit var component: MyStationsComponent
         private set
 
     override fun onCreate() {
         super.onCreate()
 
-        db = Room.databaseBuilder(
-            this,
-            StationDatabase::class.java,
-            "station.db"
-        ).build()
+        component = DaggerMyStationsComponent
+            .factory()
+            .create(this)
     }
 }

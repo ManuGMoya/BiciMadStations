@@ -5,17 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
-import com.manugmoya.bicimadstations.data.EMAIL
-import com.manugmoya.bicimadstations.data.PASSWORD
-import com.manugmoya.bicimadstations.data.database.RoomDataSource
-import com.manugmoya.bicimadstations.data.server.TheStationDbDatasource
 import com.manugmoya.bicimadstations.ui.common.app
 import com.manugmoya.bicimadstations.ui.common.getViewModel
-import com.manugmoya.data.repository.StationRepository
-import com.manugmoya.usecases.DeleteFavorite
-import com.manugmoya.usecases.FindStationById
-import com.manugmoya.usecases.InsertFavorite
-import com.manugmoya.usecases.IsFavorite
 
 class DetailActivity : AppCompatActivity(){
 
@@ -24,7 +15,7 @@ class DetailActivity : AppCompatActivity(){
     }
 
     private lateinit var binding : ActivityDetailBinding
-    private lateinit var viewModel : DetailViewModel
+    private val viewModel : DetailViewModel by lazy { getViewModel { app.component.detailViewModel } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +26,10 @@ class DetailActivity : AppCompatActivity(){
 /*        viewModel = ViewModelProvider(
             this, DetailViewModelFactory(station)
         )[DetailViewModel::class.java]*/
-        viewModel = getViewModel {
+/*        viewModel = getViewModel {
             val stationsRepository = StationRepository(
                 RoomDataSource(app.db),
-                TheStationDbDatasource(),
+                TheStationDbDataSource(),
                 EMAIL,
                 PASSWORD
             )
@@ -51,7 +42,7 @@ class DetailActivity : AppCompatActivity(){
                 DeleteFavorite(stationsRepository),
                 IsFavorite(stationsRepository)
                 )
-        }
+        }*/
 
         viewModel.model.observe(this, Observer (::updateUI))
 

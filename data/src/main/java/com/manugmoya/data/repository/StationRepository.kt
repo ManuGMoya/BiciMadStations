@@ -1,20 +1,20 @@
 package com.manugmoya.data.repository
 
 import com.manugmoya.data.source.LocalDataSource
-import com.manugmoya.data.source.RemoteDatasource
+import com.manugmoya.data.source.RemoteDataSource
 import com.manugmoya.domain.FavoriteDomain
 import com.manugmoya.domain.StationDomain
 
 class StationRepository(
     private val localDataSource: LocalDataSource,
-    private val remoteDatasource: RemoteDatasource,
+    private val remoteDataSource: RemoteDataSource,
     private val email: String,
     private val password: String
 ) {
 
     private suspend fun getToken(): String? {
         return try {
-            remoteDatasource.getToken(email, password)
+            remoteDataSource.getToken(email, password)
         }catch (e: Exception){
             null
         }
@@ -22,7 +22,7 @@ class StationRepository(
 
     suspend fun getDataStations(): List<StationDomain> {
 
-        val stations = getToken()?.let { remoteDatasource.getDataStations(it) }
+        val stations = getToken()?.let { remoteDataSource.getDataStations(it) }
         stations?.let { localDataSource.insertStations(it) }
 
         return localDataSource.getStations()
