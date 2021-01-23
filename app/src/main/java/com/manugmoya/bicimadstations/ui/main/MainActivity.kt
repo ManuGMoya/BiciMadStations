@@ -18,7 +18,8 @@ class MainActivity : AppCompatActivity() {
 
     private var isGPS: Boolean = false
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by lazy { getViewModel { app.component.mainViewModel  }}
+    private lateinit var component: MainActivityComponent
+    private val viewModel: MainViewModel by lazy { getViewModel { component.mainViewModel } }
     private lateinit var adapter: StationsAdapter
     private val coarsePermissionRequester = PermissionRequester(
         this,
@@ -39,24 +40,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setViewModel(){
-        // Uso de función genérica
-/*        viewModel = getViewModel {
-
-            val localDataSource = RoomDataSource(app.db)
-
-            MainViewModel(
-                GetLocation(
-                    LocationRepository(
-                        PlayServicesLocationDataSource(app),
-                        AndroidPermissionChecker(app)
-                    )
-                ),
-                GetDataStations(
-                    StationRepository(localDataSource, TheStationDbDataSource(), EMAIL, PASSWORD)
-                )
-            )
-        }*/
+    private fun setViewModel() {
+        component = app.component.plus(MainActivityModule())
 
         adapter = StationsAdapter(this, viewModel::onStationClicked)
 /*        // Es lo mismo que:

@@ -15,7 +15,8 @@ class DetailActivity : AppCompatActivity(){
     }
 
     private lateinit var binding : ActivityDetailBinding
-    private val viewModel : DetailViewModel by lazy { getViewModel { app.component.detailViewModel } }
+    private lateinit var component: DetailActivityComponent
+    private val viewModel : DetailViewModel by lazy { getViewModel { component.detailViewModel } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,26 +24,7 @@ class DetailActivity : AppCompatActivity(){
         setContentView(binding.root)
         val stationId = intent.getLongExtra(STATION, -1L)
 
-/*        viewModel = ViewModelProvider(
-            this, DetailViewModelFactory(station)
-        )[DetailViewModel::class.java]*/
-/*        viewModel = getViewModel {
-            val stationsRepository = StationRepository(
-                RoomDataSource(app.db),
-                TheStationDbDataSource(),
-                EMAIL,
-                PASSWORD
-            )
-
-
-            DetailViewModel(
-                stationId,
-                FindStationById(stationsRepository),
-                InsertFavorite(stationsRepository),
-                DeleteFavorite(stationsRepository),
-                IsFavorite(stationsRepository)
-                )
-        }*/
+        component = app.component.plus(DetailActivityModule(stationId))
 
         viewModel.model.observe(this, Observer (::updateUI))
 
