@@ -1,62 +1,33 @@
 package com.manugmoya.bicimadstations.ui.detail
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.manugmoya.bicimadstations.R
 import com.manugmoya.bicimadstations.databinding.ActivityDetailBinding
-import com.manugmoya.bicimadstations.data.EMAIL
-import com.manugmoya.bicimadstations.data.PASSWORD
-import com.manugmoya.bicimadstations.data.database.RoomDataSource
-import com.manugmoya.bicimadstations.data.server.TheStationDbDatasource
-import com.manugmoya.bicimadstations.ui.common.app
-import com.manugmoya.bicimadstations.ui.common.getViewModel
-import com.manugmoya.data.repository.StationRepository
-import com.manugmoya.usecases.DeleteFavorite
-import com.manugmoya.usecases.FindStationById
-import com.manugmoya.usecases.InsertFavorite
-import com.manugmoya.usecases.IsFavorite
+import org.koin.androidx.scope.ScopeActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class DetailActivity : AppCompatActivity(){
+class DetailActivity : ScopeActivity() {
 
     companion object {
         const val STATION = "DetailActivity:station"
     }
 
-    private lateinit var binding : ActivityDetailBinding
-    private lateinit var viewModel : DetailViewModel
+    private lateinit var binding: ActivityDetailBinding
+    private val viewModel: DetailViewModel by viewModel() {
+        parametersOf(intent.getLongExtra(STATION, -1L))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val stationId = intent.getLongExtra(STATION, -1L)
 
-/*        viewModel = ViewModelProvider(
-            this, DetailViewModelFactory(station)
-        )[DetailViewModel::class.java]*/
-        viewModel = getViewModel {
-            val stationsRepository = StationRepository(
-                RoomDataSource(app.db),
-                TheStationDbDatasource(),
-                EMAIL,
-                PASSWORD
-            )
-
-
-            DetailViewModel(
-                stationId,
-                FindStationById(stationsRepository),
-                InsertFavorite(stationsRepository),
-                DeleteFavorite(stationsRepository),
-                IsFavorite(stationsRepository)
-                )
-        }
-
-        viewModel.model.observe(this, Observer (::updateUI))
+        viewModel.model.observe(this, Observer(::updateUI))
 
         viewModel.favorite.observe(this, { favorite ->
-            val icon = if(favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+            val icon = if (favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
             binding.fab.setImageDrawable(getDrawable(icon))
         })
     }
@@ -91,7 +62,7 @@ class DetailActivity : AppCompatActivity(){
         }
     }
 
-    private fun updateColor(binding : ActivityDetailBinding, color: Int){
+    private fun updateColor(binding: ActivityDetailBinding, color: Int) {
         binding.stationDetailInfo.setBackgroundResource(color)
         binding.root.setBackgroundResource(color)
     }
