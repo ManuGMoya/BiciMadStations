@@ -62,6 +62,25 @@ class LocationRepositoryTest {
         }
     }
 
+    @Test
+    fun `returns location when fine location is granted`() {
+
+        runBlocking {
+            // GIVEN
+            whenever(permissionChecker.check(PermissionChecker.Permission.FINE_LOCATION)).thenReturn(
+                true
+            )
+            val locationTest = LocationDomain(30.30, 20.20)
+            whenever(locationDataSource.getLocation()).thenReturn(locationTest)
+
+            // WHEN
+            val location = locationRepository.getLocation()
+
+            // THEN
+            assertEquals(locationTest, location)
+        }
+    }
+
 
     private val mockedDefaultLocation = LocationDomain(
         LocationRepository.LATITUDE_MADRID_CENTER,

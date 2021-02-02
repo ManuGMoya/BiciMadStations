@@ -31,6 +31,8 @@ class StationRepositoryTest {
 
     private val password = "fakePassword"
 
+    private val apiKey = "fakeApiKey"
+
 
     @Before
     fun setUp() {
@@ -124,6 +126,57 @@ class StationRepositoryTest {
 
             // THEN
             verify(remoteDatasource).getToken(email, password)
+        }
+    }
+
+    @Test
+    fun `getDataStations calls getDataStation of remote data source`() {
+
+        runBlocking {
+            // GIVEN
+            whenever(remoteDatasource.getToken(email, password)).thenReturn(apiKey)
+
+            // WHEN
+            stationRepository.getDataStations()
+
+            // THEN
+            verify(remoteDatasource).getDataStations(apiKey)
+        }
+    }
+
+    @Test
+    fun `getDataStations calls insertStations of local data source`() {
+
+        runBlocking {
+            // GIVEN
+            val stationList = listOf(mockedStation)
+            whenever(remoteDatasource.getToken(email, password)).thenReturn(apiKey)
+            whenever(remoteDatasource.getDataStations(apiKey)).thenReturn(stationList)
+
+            // WHEN
+            stationRepository.getDataStations()
+
+            // THEN
+            verify(localDataSource).insertStations(stationList)
+        }
+    }
+
+    @Test
+    fun `getDataStations calls getStations of local data source`() {
+
+        runBlocking {
+            // GIVEN
+            val stationList = listOf(mockedStation)
+            whenever(remoteDatasource.getToken(email, password)).thenReturn(apiKey)
+            whenever(remoteDatasource.getDataStations(apiKey)).thenReturn(stationList)
+            whenever(localDataSource.getStations()).thenReturn(stationList)
+
+            // WHEN
+            stationRepository.getDataStations()
+            val result = localDataSource.getStations()
+
+            // THEN
+            assertEquals(stationList, result)
         }
     }
 

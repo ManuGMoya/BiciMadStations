@@ -2,6 +2,7 @@ package com.manugmoya.usecases
 
 import com.manugmoya.data.repository.StationRepository
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -39,10 +40,12 @@ class IsFavoriteTest {
     }
 
     @Test
-    fun `check is favorite`() {
+    fun `check is favorite returns null`() {
+
         runBlocking {
             // GIVEN
             val favorite = mockedFavorite.copy(id = 5)
+            whenever(stationRepository.isFavorite(id = 5)).thenReturn(null)
 
             // WHEN
             val result = isFavorite.invoke(favorite.id)
@@ -50,5 +53,22 @@ class IsFavoriteTest {
             // THEN
             assertEquals(result, null)
         }
+    }
+
+    @Test
+    fun `check is favorite returns the result from repository`() {
+
+        runBlocking {
+            // GIVEN
+            val favorite = mockedFavorite.copy(id = 5)
+            whenever(stationRepository.isFavorite(id = 5)).thenReturn(favorite)
+
+            // WHEN
+            val result = isFavorite.invoke(favorite.id)
+
+            // THEN
+            assertEquals(result, favorite)
+        }
+
     }
 }
