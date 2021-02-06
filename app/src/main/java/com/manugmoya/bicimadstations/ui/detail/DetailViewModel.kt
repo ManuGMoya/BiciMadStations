@@ -9,6 +9,7 @@ import com.manugmoya.usecases.DeleteFavorite
 import com.manugmoya.usecases.FindStationById
 import com.manugmoya.usecases.InsertFavorite
 import com.manugmoya.usecases.IsFavorite
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
@@ -16,11 +17,12 @@ class DetailViewModel(
     private val findStationById: FindStationById,
     private val insertFavorite: InsertFavorite,
     private val deleteFavorite: DeleteFavorite,
-    private val isFavorite: IsFavorite
+    private val isFavorite: IsFavorite,
+    override val uiDispatcher: CoroutineDispatcher
 
-) : ScopedViewModel() {
+) : ScopedViewModel(uiDispatcher) {
 
-    class UiModel(val station: StationDB)
+    data class UiModel(val station: StationDB)
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>

@@ -19,6 +19,8 @@ import com.manugmoya.data.source.LocalDataSource
 import com.manugmoya.data.source.LocationDataSource
 import com.manugmoya.data.source.RemoteDatasource
 import com.manugmoya.usecases.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -42,6 +44,7 @@ private val appModule = module {
     factory<RemoteDatasource> { TheStationDbDatasource() }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
+    single<CoroutineDispatcher> { Dispatchers.Main }
 }
 
 private val dataModule = module {
@@ -51,13 +54,13 @@ private val dataModule = module {
 
 private val scopesModule = module {
     scope<MainActivity> {
-        viewModel { MainViewModel(get(), get()) }
+        viewModel { MainViewModel(get(), get(), get()) }
         scoped { GetLocation(get()) }
         scoped { GetDataStations(get()) }
     }
 
     scope<DetailActivity> {
-        viewModel { (id: Long) -> DetailViewModel(id, get(), get(), get(), get()) }
+        viewModel { (id: Long) -> DetailViewModel(id, get(), get(), get(), get(), get()) }
         scoped { FindStationById(get()) }
         scoped { InsertFavorite(get()) }
         scoped { DeleteFavorite(get()) }
