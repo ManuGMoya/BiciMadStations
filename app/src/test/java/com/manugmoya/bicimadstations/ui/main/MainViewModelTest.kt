@@ -2,6 +2,7 @@ package com.manugmoya.bicimadstations.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.manugmoya.bicimadstations.CoroutinesTestRule
 import com.manugmoya.bicimadstations.mockedDefaultLocation
 import com.manugmoya.bicimadstations.mockedStation
 import com.manugmoya.usecases.GetDataStations
@@ -9,6 +10,7 @@ import com.manugmoya.usecases.GetLocation
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -18,8 +20,12 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MainViewModelTest {
+
+    @get:Rule
+    var coroutinesTestRule = CoroutinesTestRule()
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -37,7 +43,12 @@ class MainViewModelTest {
 
     @Before
     fun setUp() {
-        mainViewModel = MainViewModel(getLocation, getDataStations, Dispatchers.Unconfined)
+        mainViewModel = MainViewModel(
+            getLocation,
+            getDataStations,
+            coroutinesTestRule.testDispatcher,
+            coroutinesTestRule.testDispatcher
+        )
     }
 
     @Test
@@ -76,7 +87,6 @@ class MainViewModelTest {
             mainViewModel.model.observeForever(observer)
 
             mainViewModel.onCoarsePermissionRequest()
-            delay(500)
         }
 
         verify(observer).onChanged(MainViewModel.UiModel.Content(stations))

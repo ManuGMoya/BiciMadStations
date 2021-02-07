@@ -16,7 +16,8 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val getLocation: GetLocation,
     private val getDataStations: GetDataStations,
-    uiDispatcher: CoroutineDispatcher
+    uiDispatcher: CoroutineDispatcher,
+    private val defaultDispatcher: CoroutineDispatcher
 ) : ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
@@ -45,7 +46,7 @@ class MainViewModel(
             val location = async { getLocation.invoke() }
             val stations = async { getDataStations.invoke() }
             val stationsOrdered =
-                stations.await().orderListByLocation(location.await().toLocation())
+                stations.await().orderListByLocation(location.await().toLocation(), defaultDispatcher)
             _model.value = stationsOrdered.let {
                 UiModel.Content(
                     it

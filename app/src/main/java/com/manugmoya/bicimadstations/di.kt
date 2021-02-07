@@ -44,7 +44,8 @@ private val appModule = module {
     factory<RemoteDatasource> { TheStationDbDatasource() }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
-    single<CoroutineDispatcher> { Dispatchers.Main }
+    single<CoroutineDispatcher>(named( "uiDispatcher")){ Dispatchers.Main }
+    single<CoroutineDispatcher>(named( "defaultDispatcher")){ Dispatchers.Default }
 }
 
 private val dataModule = module {
@@ -54,13 +55,13 @@ private val dataModule = module {
 
 private val scopesModule = module {
     scope<MainActivity> {
-        viewModel { MainViewModel(get(), get(), get()) }
+        viewModel { MainViewModel(get(), get(), get(named("uiDispatcher")), get(named("defaultDispatcher"))) }
         scoped { GetLocation(get()) }
         scoped { GetDataStations(get()) }
     }
 
     scope<DetailActivity> {
-        viewModel { (id: Long) -> DetailViewModel(id, get(), get(), get(), get(), get()) }
+        viewModel { (id: Long) -> DetailViewModel(id, get(), get(), get(), get(), get(named("uiDispatcher"))) }
         scoped { FindStationById(get()) }
         scoped { InsertFavorite(get()) }
         scoped { DeleteFavorite(get()) }

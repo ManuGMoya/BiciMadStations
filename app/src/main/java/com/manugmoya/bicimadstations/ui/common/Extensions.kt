@@ -15,10 +15,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.manugmoya.bicimadstations.StationApp
 import com.manugmoya.domain.StationDomain
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-fun SpannableStringBuilder.appendInfo(context: Context,stringRes: Int, value: String) {
+fun SpannableStringBuilder.appendInfo(context: Context, stringRes: Int, value: String) {
     bold {
         append(context.resources.getString(stringRes))
         append(": ")
@@ -26,7 +27,7 @@ fun SpannableStringBuilder.appendInfo(context: Context,stringRes: Int, value: St
     appendLine(value)
 }
 
-fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = true) : View =
+fun ViewGroup.inflate(layoutRes: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 
 inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
@@ -36,8 +37,11 @@ inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit)
     startActivity(intentFor<T>(body))
 }
 
-suspend fun List<StationDomain>.orderListByLocation(location: Location) : List<StationDomain> {
-    return withContext(Dispatchers.Default) {
+suspend fun List<StationDomain>.orderListByLocation(
+    location: Location,
+    dispatcher: CoroutineDispatcher
+): List<StationDomain> {
+    return withContext(dispatcher) {
         forEach {
             val stationLocation = Location("").apply {
                 longitude = it.geometry.coordinates[0]

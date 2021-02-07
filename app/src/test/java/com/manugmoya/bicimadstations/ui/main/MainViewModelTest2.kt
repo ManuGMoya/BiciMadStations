@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.qualifier.named
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -33,7 +34,12 @@ class MainViewModelTest2 {
 
     @Before
     fun setUp() {
-        mainViewModel = MainViewModel(getLocation, getDataStations, Dispatchers.Unconfined)
+        mainViewModel = MainViewModel(
+            getLocation,
+            getDataStations,
+            Dispatchers.Unconfined,
+            Dispatchers.Unconfined
+        )
     }
 
     @Test
