@@ -46,20 +46,21 @@ allprojects {
         ]
 
         libs = [
-                okhttpLoginInterceptor   : 'com.squareup.okhttp3:logging-interceptor:4.9.0',
-                retrofit                 : 'com.squareup.retrofit2:retrofit:2.9.0',
-                retrofitGsonConverter    : 'com.squareup.retrofit2:converter-gson:2.9.0',
-                koin                     : "org.koin:koin-androidx-viewmodel:2.2.0-rc-4"
+                okhttpLoginInterceptor: 'com.squareup.okhttp3:logging-interceptor:4.9.0',
+                retrofit              : 'com.squareup.retrofit2:retrofit:2.9.0',
+                retrofitGsonConverter : 'com.squareup.retrofit2:converter-gson:2.9.0',
+                koin                  : "org.koin:koin-androidx-viewmodel:2.2.0-rc-4"
         ]
 
         testLibs = [
                 junit        : 'junit:junit:4.13.1',
                 mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
-                mockitoInline: "org.mockito:mockito-inline:2.28.2"
+                mockitoInline: "org.mockito:mockito-inline:2.28.2",
+                koinTest     : 'org.koin:koin-test:2.2.0-rc-4'
         ]
 
         androidxTestLibs = [
-                archCoreTesting: 'androidx.arch.core:core-testing:2.1.0',
+                archCoreTesting        : 'androidx.arch.core:core-testing:2.1.0',
                 kotlinCoroutinesTesting: 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.0'
         ]
 

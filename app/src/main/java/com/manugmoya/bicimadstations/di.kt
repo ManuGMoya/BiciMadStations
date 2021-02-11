@@ -48,7 +48,7 @@ private val appModule = module {
     single<CoroutineDispatcher>(named( "defaultDispatcher")){ Dispatchers.Default }
 }
 
-private val dataModule = module {
+val dataModule = module {
     factory { StationRepository(get(), get(), get(named("email")), get(named("password"))) }
     factory { LocationRepository(get(), get()) }
 }
