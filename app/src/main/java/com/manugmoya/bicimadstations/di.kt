@@ -7,6 +7,7 @@ import com.manugmoya.bicimadstations.data.PASSWORD
 import com.manugmoya.bicimadstations.data.PlayServicesLocationDataSource
 import com.manugmoya.bicimadstations.data.database.RoomDataSource
 import com.manugmoya.bicimadstations.data.database.StationDatabase
+import com.manugmoya.bicimadstations.data.server.StationsDb
 import com.manugmoya.bicimadstations.data.server.TheStationDbDatasource
 import com.manugmoya.bicimadstations.ui.detail.DetailActivity
 import com.manugmoya.bicimadstations.ui.detail.DetailViewModel
@@ -41,11 +42,13 @@ private val appModule = module {
     single(named("password")) { PASSWORD }
     single { StationDatabase.build(get()) }
     factory<LocalDataSource> { RoomDataSource(get()) }
-    factory<RemoteDatasource> { TheStationDbDatasource() }
+    factory<RemoteDatasource> { TheStationDbDatasource(get()) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
-    single<CoroutineDispatcher>(named( "uiDispatcher")){ Dispatchers.Main }
-    single<CoroutineDispatcher>(named( "defaultDispatcher")){ Dispatchers.Default }
+    single<CoroutineDispatcher>(named("uiDispatcher")) { Dispatchers.Main }
+    single<CoroutineDispatcher>(named("defaultDispatcher")) { Dispatchers.Default }
+    single(named("baseUrl")) { "https://openapi.emtmadrid.es/v1/" }
+    single { StationsDb(get(named("baseUrl"))) }
 }
 
 val dataModule = module {
@@ -55,13 +58,29 @@ val dataModule = module {
 
 private val scopesModule = module {
     scope<MainActivity> {
-        viewModel { MainViewModel(get(), get(), get(named("uiDispatcher")), get(named("defaultDispatcher"))) }
+        viewModel {
+            MainViewModel(
+                get(),
+                get(),
+                get(named("uiDispatcher")),
+                get(named("defaultDispatcher"))
+            )
+        }
         scoped { GetLocation(get()) }
         scoped { GetDataStations(get()) }
     }
 
     scope<DetailActivity> {
-        viewModel { (id: Long) -> DetailViewModel(id, get(), get(), get(), get(), get(named("uiDispatcher"))) }
+        viewModel { (id: Long) ->
+            DetailViewModel(
+                id,
+                get(),
+                get(),
+                get(),
+                get(),
+                get(named("uiDispatcher"))
+            )
+        }
         scoped { FindStationById(get()) }
         scoped { InsertFavorite(get()) }
         scoped { DeleteFavorite(get()) }
