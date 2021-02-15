@@ -71,7 +71,8 @@ allprojects {
                 extJunit     : 'androidx.test.ext:junit-ktx:1.1.2',
                 koinTest     : 'org.koin:koin-test:2.2.0-rc-4',
                 mockWebServer: 'com.squareup.okhttp3:mockwebserver:4.9.0',
-                okhttpIdling : 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
+                okhttpIdling : 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0',
+                uiautomator  : 'androidx.test.uiautomator:uiautomator:2.2.0'
         ]
     }
 }
