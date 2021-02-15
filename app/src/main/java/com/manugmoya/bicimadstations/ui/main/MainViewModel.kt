@@ -9,28 +9,31 @@ import com.manugmoya.bicimadstations.ui.common.orderListByLocation
 import com.manugmoya.domain.StationDomain
 import com.manugmoya.usecases.GetDataStations
 import com.manugmoya.usecases.GetLocation
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getLocation: GetLocation,
-    private val getDataStations: GetDataStations
-) :  ScopedViewModel() {
+    private val getDataStations: GetDataStations,
+    uiDispatcher: CoroutineDispatcher,
+    private val defaultDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
-    val model : LiveData<UiModel>
+    val model: LiveData<UiModel>
         get() {
-            if(_model.value == null) refresh()
+            if (_model.value == null) refresh()
             return _model
         }
 
     private val _navigation = MutableLiveData<Event<StationDomain>>()
-    val navigation : LiveData<Event<StationDomain>> = _navigation
+    val navigation: LiveData<Event<StationDomain>> = _navigation
 
-    sealed class UiModel{
+    sealed class UiModel {
         object Loading : UiModel()
-        class Content(val stations : List<StationDomain>) : UiModel()
-        object RequestLocationPermission: UiModel()
+        data class Content(val stations: List<StationDomain>) : UiModel()
+        object RequestLocationPermission : UiModel()
     }
 
     private fun refresh() {
@@ -40,9 +43,10 @@ class MainViewModel(
     fun onCoarsePermissionRequest() {
         launch {
             _model.value = UiModel.Loading
-            val location = async { getLocation.invoke()}
+            val location = async { getLocation.invoke() }
             val stations = async { getDataStations.invoke() }
-            val stationsOrdered = stations.await().orderListByLocation(location.await().toLocation())
+            val stationsOrdered =
+                stations.await().orderListByLocation(location.await().toLocation(), defaultDispatcher)
             _model.value = stationsOrdered.let {
                 UiModel.Content(
                     it

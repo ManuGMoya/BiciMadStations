@@ -1,0 +1,407 @@
+{
+  "code": "00",
+  "description": "264 bases recovered",
+  "datetime": "2021-02-13T18:58:23.170985",
+  "data": [
+    {
+      "id": 1,
+      "name": "Puerta del Sol A",
+      "light": 1,
+      "number": "1a",
+      "address": "Puerta del Sol nº 1",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 30,
+      "dock_bikes": 28,
+      "free_bases": 0,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7018341,
+          40.4172137
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Puerta del Sol B",
+      "light": 1,
+      "number": "1b",
+      "address": "Puerta del Sol nº 1",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 30,
+      "dock_bikes": 18,
+      "free_bases": 0,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.701602938060457,
+          40.41731271011562
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Miguel Moya",
+      "light": 2,
+      "number": "2",
+      "address": "Calle Miguel Moya nº 1",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 13,
+      "free_bases": 9,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7058415,
+          40.4205886
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Plaza Conde Suchil",
+      "light": 2,
+      "number": "3",
+      "address": "Plaza del Conde del Valle de Súchil nº 3",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 18,
+      "dock_bikes": 9,
+      "free_bases": 6,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7069171,
+          40.4302937
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Malasaña",
+      "light": 1,
+      "number": "4",
+      "address": "Calle Manuela Malasaña nº 5",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 14,
+      "free_bases": 6,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7025875,
+          40.4285524
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Fuencarral",
+      "light": 1,
+      "number": "5",
+      "address": "Calle Fuencarral nº 108",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 27,
+      "dock_bikes": 23,
+      "free_bases": 1,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.70205,
+          40.42852
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "Colegio Arquitectos",
+      "light": 2,
+      "number": "6",
+      "address": "Calle Hortaleza nº 63",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 15,
+      "free_bases": 8,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.698447,
+          40.424148
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "Hortaleza",
+      "light": 1,
+      "number": "7",
+      "address": "Calle Hortaleza nº 75",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 21,
+      "dock_bikes": 14,
+      "free_bases": 5,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6977715,
+          40.4251906
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "Alonso Martínez",
+      "light": 2,
+      "number": "8",
+      "address": "Plaza de Alonso Martínez nº 5",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 10,
+      "free_bases": 7,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6954403,
+          40.4278682
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "Plaza de San Miguel",
+      "light": 0,
+      "number": "9",
+      "address": "Plaza de San Miguel nº 9",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 3,
+      "free_bases": 19,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7095084,
+          40.4156057
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "Marqués de la Ensenada",
+      "light": 2,
+      "number": "10",
+      "address": "Calle Marqués de la Ensenada nº 16",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 11,
+      "free_bases": 8,
+      "reservations_count": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.69214,
+          40.42533
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "San Andrés",
+      "light": 1,
+      "number": "11",
+      "address": "Calle San Andrés nº 18",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 15,
+      "free_bases": 5,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7035918,
+          40.4269483
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "name": "San Hermenegildo",
+      "light": 1,
+      "number": "12",
+      "address": "Calle San Bernardo nº 85",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 17,
+      "free_bases": 4,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7061931,
+          40.4284246
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "Conde Duque",
+      "light": 1,
+      "number": "13",
+      "address": "Calle Conde Duque nº 22",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 23,
+      "free_bases": 1,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7104417,
+          40.4273264
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "Ventura Rodríguez",
+      "light": 0,
+      "number": "14",
+      "address": "Calle Duque de Liria",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 4,
+      "free_bases": 15,
+      "reservations_count": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.713479,
+          40.4260957
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "name": "San Vicente Ferrer",
+      "light": 2,
+      "number": "15",
+      "address": "Calle San Vicente Ferrer nº 64",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 21,
+      "dock_bikes": 13,
+      "free_bases": 7,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7074453,
+          40.4262383
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "name": "San Bernardo",
+      "light": 2,
+      "number": "16",
+      "address": "Calle San Bernardo nº 22",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 21,
+      "dock_bikes": 6,
+      "free_bases": 11,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7075065,
+          40.4230721
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "name": "Carlos Cambronero",
+      "light": 1,
+      "number": "17",
+      "address": "Plaza de Carlos Cambronero nº 2",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 18,
+      "free_bases": 4,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.7038312,
+          40.4232649
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "name": "Plaza de Pedro Zerolo",
+      "light": 1,
+      "number": "18",
+      "address": "Plaza de Pedro Zerolo nº 1",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 14,
+      "free_bases": 2,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6996502,
+          40.4207773
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "name": "Prim",
+      "light": 2,
+      "number": "19",
+      "address": "Calle Prim nº 2",
+      "activate": 1,
+      "no_available": 0,
+      "total_bases": 24,
+      "dock_bikes": 7,
+      "free_bases": 14,
+      "reservations_count": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.6954983,
+          40.4218616
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 package com.manugmoya.bicimadstations.ui.common
 
-open class Event<out T>(private val content: T) {
+data class Event<out T>(private val content: T) {
 
     private var hasBeenHandled = false
 
