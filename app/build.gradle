@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -32,28 +33,27 @@ android {
         jvmTarget = '1.8'
     }
 
-    viewBinding.enabled = true
+    buildFeatures {
+        viewBinding = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation project(":usecases")
+    implementation project(":data")
+    implementation project(":domain")
 
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation androidLibs.values()
+    implementation kotlinLibs.values()
+    implementation libs.values()
+    kapt androidKaptLibs.values()
 
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    // RETROFIT
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    // COROUTINES
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0'
-
+    testImplementation testLibs.values()
+    androidTestImplementation androidTestLibs.values()
+    testImplementation androidxTestLibs.values()
 }
 
